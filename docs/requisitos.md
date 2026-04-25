@@ -22,3 +22,17 @@
 - **RNF06 – Precisão da Distância:** O cálculo de distância entre o usuário e os pontos deve utilizar a Fórmula de Haversine para garantir precisão em linha reta (esférica).
 - **RNF07 – Privacidade (LGPD):** O sistema deve solicitar permissão explícita do navegador para acessar os dados de geolocalização do usuário.
 - **RNF08 – Disponibilidade Offline do Mapa:** O sistema deve exibir uma mensagem amigável ou estado de erro caso as APIs de mapa não possam ser carregadas.
+
+## 3. Matriz de Rastreabilidade (Requisitos vs. User Stories)
+
+| ID | Requisito Funcional (RF) | User Story (US) Relacionada |
+| :--- | :--- | :--- |
+| **RF01** | Gestão de Pontos (CRUD) | [US02] Gestão de Pontos de Coleta |
+| **RF02** | Visualização Geográfica (Mapa) | [US03] Visualização de Pontos (Mapa e Cards) |
+| **RF03** | Visualização em Lista (Cards) | [US03] Visualização de Pontos (Mapa e Cards) |
+| **RF04** | Detalhamento de Ponto | [US04] Detalhamento e Geolocalização |
+| **RF05** | Gestão de Categorias | [US05] Gestão de Categorias e Feedbacks |
+| **RF06** | Registro de Feedback (Cidadão) | [US06] Registro de Feedback de Campo |
+| **RF07** | Controle de Feedbacks (Admin) | [US05] Gestão de Categorias e Feedbacks |
+| **RF08** | Autenticação (Admin) | [US01] Autenticação e Segurança |
+| **RF09** | Localização do Usuário (Distância) | [US04] Detalhamento e Geolocalização |
