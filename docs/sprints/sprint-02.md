@@ -38,12 +38,12 @@ A entrega está diretamente vinculada ao conteúdo de Requisitos, reforçando os
 * **Arquivos criados/atualizados:** `docs/sprints/sprint-02.md`, `docs/backlog-produto.md`.
 * **Commits relevantes:** 
 * Augusto Fernandes: https://github.com/diovaniMangiajr/projeto-descarte-lixo-eletronico/commit/512e6badfb5967b215ac95a339e2cddfb198f629.
-* Diovani Mangia: 
+* Diovani Mangia: https://github.com/diovaniMangiajr/projeto-descarte-lixo-eletronico/commit/843ab4b5ad8eb5bdd17b4dd19b8bba92e932b388.
 * Ezequiel Dominguez: https://github.com/diovaniMangiajr/projeto-descarte-lixo-eletronico/commit/20aa895b4207df56a9d9fe25f57409981ce0ba84.
 * Leonardo Carvalho: https://github.com/diovaniMangiajr/projeto-descarte-lixo-eletronico/commit/159332d243775cd62f69704d4d0964a40ecb70a5.
 * Rafael Silva Martins: https://github.com/diovaniMangiajr/projeto-descarte-lixo-eletronico/commit/edd4317aa57bf6f6eaa2690fcf680db3c163ae0b.
 * **Tag da sprint:** `sprint-02`.
-* ** Imagem da reunião:
+* ** Imagem da reunião: https://github.com/diovaniMangiajr/projeto-descarte-lixo-eletronico/blob/main/docs/sprints/prints_reunioes/sprint%2002%20reuniao.jpeg.
 
 ---
 
