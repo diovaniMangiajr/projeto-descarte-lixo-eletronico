@@ -18,6 +18,7 @@ As seguintes atividades foram priorizadas e realizadas pela equipe:
 * Elaboração do Diagrama de Sequência detalhando o fluxo de "Adicionar Novo Ponto de Coleta" (US02).
 * Criação do Diagrama de Componentes evidenciando a arquitetura Frontend (React) e Backend (Spring Boot).
 * Construção do Modelo Entidade-Relacionamento (DER) para o banco de dados PostgreSQL.
+* Estruturação inicial da API SpringBoot
 * Prototipação de alta fidelidade no Figma abrangendo as visões do Administrador e Cidadão.
 * Redação das descrições textuais complementares e vínculo com os requisitos.
 
@@ -47,7 +48,7 @@ No arquivo acima, é possível consultar as descrições dos seguintes artefatos
 
 - Diovani Mangia: ![Commit](https://github.com/diovaniMangiajr/projeto-descarte-lixo-eletronico/commit/757488c8a91b8c6d13ec3ffe62f73b23344b593b)
 
-- Ezequiel Dominguez: 
+- Ezequiel Dominguez: ![Commit](https://github.com/diovaniMangiajr/projeto-descarte-lixo-eletronico/commit/4a32a266b1c05a58f9ba6e84b2c36bc016827a3a)
 
 - Leonardo Carvalho: ![Commit](https://github.com/diovaniMangiajr/projeto-descarte-lixo-eletronico/commit/23629ec03589c28872fe40a2dd8ded39240c3457)
 
