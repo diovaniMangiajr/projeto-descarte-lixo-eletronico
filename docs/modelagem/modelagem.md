@@ -8,6 +8,8 @@ Os protótipos de interface foram desenvolvidos no Figma e servem como base visu
 
 Link do Figma: https://www.figma.com/design/CXBHNV7ROR5T0JA5KP8N3Z/Design-Inicial?node-id=0-1&t=8RcZr0mLEG0sYDAX-1
 
+---
+
 ## 2. Diagrama de Casos de Uso
 O Diagrama de Casos de Uso representa as interações entre os atores (Administrador e Cidadão) e as funcionalidades principais do sistema, mapeadas diretamente das User Stories (US).
 
@@ -53,6 +55,20 @@ A arquitetura escolhida visa atender aos requisitos de modularidade e escalabili
 
 ---
 
-## 5. Referências
+## 5. Modelagem de Dados (DER)
+O Modelo Entidade-Relacionamento define como as informações serão estruturadas no PostgreSQL para suportar as funcionalidades do sistema.
+
+![Diagrama de Entidade-Relacionamento](./bd/diagrama-entidade-relacionamento.png)
+
+### 5.1 Descrição das Tabelas e Relacionamentos
+* **`usuarios_admin`**: Suporta a autenticação segura (US01) através do armazenamento de credenciais (hashes de senha).
+* **`pontos_coleta`**: Tabela central que armazena endereços, horários e geolocalização para visualização pública (US02, US03, US04).
+* **`categorias_residuo`**: Catálogo de materiais gerido via administração (US05).
+* **`ponto_aceita_categoria`**: Tabela associativa que resolve a relação N:N entre pontos e materiais aceitos.
+* **`feedbacks_cidadao`**: Armazena os relatos de problemas (US06), permitindo a moderação e resolução pelo administrador (US05).
+
+---
+
+## 6. Referências
 * Backlog do Produto - Projeto Descarte de Lixo Eletrônico.
 * Regulamento do Trabalho Final - Engenharia de Software 2026/1.
