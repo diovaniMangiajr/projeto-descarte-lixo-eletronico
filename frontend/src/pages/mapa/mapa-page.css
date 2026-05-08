@@ -1,0 +1,326 @@
+.mapv2 {
+  min-height: 100vh;
+  color: #f2f6ff;
+  background: linear-gradient(180deg, #152032 0%, #223247 100%);
+}
+
+.mapv2-shell {
+  display: grid;
+  grid-template-columns: 459px minmax(0, 1fr);
+  min-height: calc(100vh - 76px);
+}
+
+.mapv2-sidebar {
+  padding: 24px 44px;
+  border-right: 1px solid rgba(123, 169, 211, 0.1);
+}
+
+.mapv2-intro {
+  margin-bottom: 22px;
+}
+
+.mapv2-intro h1 {
+  margin: 0;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-size: 39px;
+  line-height: 1.15;
+  font-weight: 700;
+}
+
+.mapv2-intro p {
+  margin: 10px 0 0;
+  max-width: 300px;
+  color: rgba(220, 231, 246, 0.64);
+  font-size: 15px;
+  line-height: 1.25;
+}
+
+.mapv2-list {
+  width: 371px;
+  display: grid;
+  gap: 20px;
+}
+
+.mapv2-card {
+  width: 371px;
+  border-radius: 14px;
+  padding: 20px;
+  display: grid;
+  gap: 14px;
+  background: linear-gradient(106deg, #1e2a40 0%, #1f2d45 55%, #1a2740 100%);
+  border: 1px solid rgba(91, 121, 160, 0.22);
+}
+
+.mapv2-card--featured {
+  height: 352px;
+  border-color: #17a9ff;
+  box-shadow:
+    0 0 0 1px rgba(23, 169, 255, 0.18) inset,
+    0 22px 52px rgba(8, 14, 26, 0.42);
+  gap: 16px;
+  padding: 20px;
+}
+
+.mapv2-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.mapv2-card__header h2 {
+  margin: 0;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.25;
+  font-weight: 700;
+}
+
+.mapv2-card:not(.mapv2-card--featured) .mapv2-card__header h2 {
+  font-size: 16px;
+  line-height: 1.2;
+  font-weight: 700;
+}
+
+.mapv2-location {
+  margin: 6px 0 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.2;
+  color: rgba(244, 248, 255, 0.95);
+}
+
+.mapv2-card:not(.mapv2-card--featured) .mapv2-location {
+  font-size: 14px;
+}
+
+.mapv2-location__icon {
+  width: 17px;
+  height: 17px;
+  color: rgba(236, 243, 255, 0.94);
+}
+
+.mapv2-status {
+  flex: 0 0 auto;
+  margin-top: 2px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.mapv2-status__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: currentColor;
+  box-shadow: 0 0 10px currentColor;
+}
+
+.mapv2-status--aberto {
+  color: #2de7a2;
+  background: rgba(45, 231, 162, 0.08);
+  border: 1px solid rgba(45, 231, 162, 0.2);
+}
+
+.mapv2-status--fechado {
+  color: #ff667f;
+  background: rgba(255, 102, 127, 0.08);
+  border: 1px solid rgba(255, 102, 127, 0.2);
+}
+
+.mapv2-meta-block {
+  display: grid;
+  gap: 10px;
+}
+
+.mapv2-meta-block h3 {
+  margin: 0;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  color: rgba(240, 247, 255, 0.86);
+}
+
+.mapv2-hours {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 30px;
+  font-size: clamp(20px, 1.3vw, 30px);
+  line-height: 1.2;
+  color: #f7faff;
+}
+
+.mapv2-hours__icon {
+  width: 20px;
+  height: 20px;
+  color: #1db3ff;
+}
+
+.mapv2-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.mapv2-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid rgba(92, 123, 161, 0.22);
+  border-radius: 4px;
+  padding: 6px 10px;
+  font-size: 13px;
+  color: rgba(235, 243, 255, 0.94);
+  background: rgba(15, 24, 39, 0.42);
+}
+
+.mapv2-tag__icon {
+  width: 14px;
+  height: 14px;
+  color: #2cb8ff;
+}
+
+.mapv2-actions {
+  margin-top: 6px;
+  display: grid;
+  gap: 12px;
+}
+
+.mapv2-btn {
+  width: 100%;
+  height: 36px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: 10px;
+  background: transparent;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.mapv2-btn__icon {
+  width: 16px;
+  height: 16px;
+}
+
+.mapv2-btn--outline {
+  color: #25b6ff;
+  border: 1px solid rgba(37, 182, 255, 0.9);
+}
+
+.mapv2-btn--danger {
+  color: #ff456c;
+  border: 1px solid rgba(255, 69, 108, 0.95);
+}
+
+.mapv2-canvas {
+  position: relative;
+  min-height: 680px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 16% 15%, rgba(36, 180, 255, 0.22), transparent 14%),
+    radial-gradient(circle at 82% 20%, rgba(36, 180, 255, 0.16), transparent 16%),
+    linear-gradient(180deg, #1b2a3f 0%, #27384f 100%);
+}
+
+.mapv2-search {
+  position: absolute;
+  top: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  min-width: min(86%, 430px);
+  padding: 14px 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(108, 147, 186, 0.28);
+  background: rgba(14, 26, 44, 0.9);
+  color: #eef6ff;
+  font-family: Inter, system-ui, sans-serif;
+}
+
+.mapv2-search__icon {
+  width: 18px;
+  height: 18px;
+}
+
+.mapv2-grid {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(rgba(42, 170, 235, 0.13) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(42, 170, 235, 0.13) 1px, transparent 1px);
+  background-size: 58px 58px;
+  opacity: 0.55;
+}
+
+@media (max-width: 1200px) {
+  .mapv2-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .mapv2-sidebar {
+    padding: 18px;
+    border-right: 0;
+    border-bottom: 1px solid rgba(123, 169, 211, 0.1);
+  }
+
+  .mapv2-intro h1 {
+    font-size: 28px;
+  }
+
+  .mapv2-intro p {
+    font-size: 16px;
+  }
+
+  .mapv2-list {
+    width: 100%;
+  }
+
+  .mapv2-card,
+  .mapv2-card--featured {
+    width: 100%;
+    height: auto;
+  }
+
+  .mapv2-card__header h2 {
+    font-size: 16px;
+  }
+
+  .mapv2-location,
+  .mapv2-card:not(.mapv2-card--featured) .mapv2-location {
+    font-size: 14px;
+  }
+
+  .mapv2-hours {
+    font-size: 20px;
+  }
+
+  .mapv2-tag {
+    font-size: 12px;
+  }
+
+  .mapv2-btn {
+    font-size: 12px;
+  }
+}

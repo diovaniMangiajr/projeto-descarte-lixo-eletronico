@@ -56,11 +56,61 @@ Funcionalidades priorizadas para a primeira versão:
 
 A intenção é manter frontend e backend no mesmo repositório, com a documentação organizada na pasta `docs/`.
 
+O frontend está isolado em `frontend/` para separar a aplicação da documentação e facilitar a evolução futura.
+
 ## Como Executar Localmente
 
-O projeto ainda está em fase inicial, então os comandos oficiais de execução serão definidos conforme a estrutura evoluir.
+### Frontend
 
-Quando a base estiver consolidada, esta seção será atualizada com:
+Entre na pasta do frontend antes de executar os comandos:
+
+```bash
+cd frontend
+```
+
+1. Instale as dependências:
+
+	```bash
+	npm install
+	```
+
+2. Inicie o ambiente de desenvolvimento:
+
+	```bash
+	npm run dev
+	```
+
+3. Gere a build de produção:
+
+	```bash
+	npm run build
+	```
+
+4. Pré-visualize a build gerada:
+
+	```bash
+	npm run preview
+	```
+
+O frontend foi inicializado com Vite + React + TypeScript, React Router DOM e Axios.
+
+### Estrutura do Frontend
+
+- `frontend/src/app`: núcleo da aplicação e configuração de rotas.
+- `frontend/src/components/layout`: componentes compartilhados de layout.
+- `frontend/src/pages`: páginas organizadas por rota e contexto.
+- `frontend/src/services/http`: cliente HTTP e integrações com API.
+- `frontend/src/styles`: estilos globais da aplicação.
+
+As rotas iniciais disponíveis são:
+
+- `/mapa`
+- `/admin`
+- `/login`
+
+A rota raiz `/` redireciona para `/mapa`.
+
+Quando a base do backend estiver consolidada, esta seção será atualizada com:
 
 - pré-requisitos (versões de Node.js, Java e PostgreSQL)
 - comandos de instalação

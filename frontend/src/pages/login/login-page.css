@@ -1,0 +1,144 @@
+.loginv2 {
+  min-height: 100vh;
+  color: #f2f6ff;
+  background: #223247;
+}
+
+.loginv2-shell {
+  min-height: calc(100vh - 76px);
+  display: grid;
+  place-items: center;
+  padding: 44px;
+}
+
+.loginv2-card {
+  width: min(100%, 520px);
+  border-radius: 18px;
+  border: 1px solid rgba(35, 174, 246, 0.5);
+  background:
+    linear-gradient(106deg, rgba(30, 42, 64, 0.94) 0%, rgba(29, 42, 66, 0.92) 58%, rgba(24, 36, 58, 0.95) 100%);
+  box-shadow:
+    0 0 0 1px rgba(23, 169, 255, 0.14) inset,
+    0 28px 64px rgba(7, 13, 25, 0.5);
+  padding: 28px;
+}
+
+.loginv2-eyebrow {
+  margin: 0;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #80d8ff;
+}
+
+.loginv2-card h1 {
+  margin: 10px 0 0;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-size: 32px;
+  line-height: 1.1;
+}
+
+.loginv2-copy {
+  margin: 10px 0 0;
+  color: rgba(220, 232, 246, 0.78);
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.35;
+}
+
+.loginv2-form {
+  margin-top: 20px;
+  display: grid;
+  gap: 14px;
+}
+
+.loginv2-field {
+  display: grid;
+  gap: 8px;
+}
+
+.loginv2-field > span {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: rgba(230, 241, 255, 0.86);
+  text-transform: uppercase;
+}
+
+.loginv2-inputWrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(110, 145, 182, 0.25);
+  background: rgba(13, 23, 38, 0.62);
+  padding: 0 12px;
+  min-height: 44px;
+}
+
+.loginv2-inputIcon {
+  width: 16px;
+  height: 16px;
+  color: rgba(126, 217, 255, 0.95);
+  flex: 0 0 auto;
+}
+
+.loginv2-inputWrap input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: #f4f9ff;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 15px;
+}
+
+.loginv2-inputWrap input::placeholder {
+  color: rgba(175, 195, 219, 0.8);
+}
+
+.loginv2-submit {
+  margin-top: 6px;
+  width: 100%;
+  min-height: 42px;
+  border-radius: 10px;
+  border: 1px solid rgba(37, 182, 255, 0.9);
+  background: rgba(20, 42, 68, 0.45);
+  color: #1fb6ff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.loginv2-submit__icon {
+  width: 15px;
+  height: 15px;
+}
+
+.loginv2-submit:hover {
+  background: rgba(25, 64, 100, 0.46);
+}
+
+@media (max-width: 900px) {
+  .loginv2-shell {
+    padding: 18px;
+  }
+
+  .loginv2-card {
+    padding: 20px;
+  }
+
+  .loginv2-card h1 {
+    font-size: 26px;
+  }
+}
