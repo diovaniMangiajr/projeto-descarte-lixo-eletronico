@@ -1,7 +1,7 @@
 // 1. IMPORTAÇÕES: Trazemos ferramentas de fora para usar no nosso arquivo.
 import { useState } from 'react'; // O 'useState' é como uma "memória" para o componente.
 import { LockKeyhole, LogIn, Mail, AlertCircle } from 'lucide-react'; // Ícones prontos para o visual.
-import { AppHeader } from '@/components/layout/AppHeader'; // O cabeçalho padrão que o Leo criou.
+import { AppHeader } from '@/components/layout/AppHeader'; // O cabeçalho padrão desenvolvido pelo designer.
 import './login-page.css'; // O arquivo onde definimos as cores e o layout.
 
 export function LoginPage() {
