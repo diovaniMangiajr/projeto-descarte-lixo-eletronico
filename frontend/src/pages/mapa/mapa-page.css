@@ -1,7 +1,10 @@
 .mapv2 {
   min-height: 100vh;
-  color: #f2f6ff;
-  background: linear-gradient(180deg, #152032 0%, #223247 100%);
+  color: var(--app-text);
+  background:
+    radial-gradient(circle at 15% 14%, var(--app-glow-primary), transparent 22%),
+    radial-gradient(circle at 88% 16%, var(--app-glow-secondary), transparent 20%),
+    linear-gradient(180deg, var(--app-surface-primary) 0%, var(--app-surface-secondary) 100%);
 }
 
 .mapv2-shell {
@@ -12,7 +15,7 @@
 
 .mapv2-sidebar {
   padding: 24px 44px;
-  border-right: 1px solid rgba(123, 169, 211, 0.1);
+  border-right: 1px solid var(--app-header-border);
 }
 
 .mapv2-intro {
@@ -30,7 +33,7 @@
 .mapv2-intro p {
   margin: 10px 0 0;
   max-width: 300px;
-  color: rgba(220, 231, 246, 0.64);
+  color: var(--app-text-muted);
   font-size: 15px;
   line-height: 1.25;
 }
@@ -47,16 +50,14 @@
   padding: 20px;
   display: grid;
   gap: 14px;
-  background: linear-gradient(106deg, #1e2a40 0%, #1f2d45 55%, #1a2740 100%);
-  border: 1px solid rgba(91, 121, 160, 0.22);
+  background: var(--app-card-background);
+  border: 1px solid var(--app-card-border);
 }
 
 .mapv2-card--featured {
   height: 352px;
-  border-color: #17a9ff;
-  box-shadow:
-    0 0 0 1px rgba(23, 169, 255, 0.18) inset,
-    0 22px 52px rgba(8, 14, 26, 0.42);
+  border-color: var(--accent);
+  box-shadow: var(--app-card-shadow);
   gap: 16px;
   padding: 20px;
 }
@@ -90,7 +91,7 @@
   font-family: Inter, system-ui, sans-serif;
   font-size: 15px;
   line-height: 1.2;
-  color: rgba(244, 248, 255, 0.95);
+  color: var(--app-text);
 }
 
 .mapv2-card:not(.mapv2-card--featured) .mapv2-location {
@@ -100,7 +101,7 @@
 .mapv2-location__icon {
   width: 17px;
   height: 17px;
-  color: rgba(236, 243, 255, 0.94);
+  color: var(--app-text-muted);
 }
 
 .mapv2-status {
@@ -126,15 +127,15 @@
 }
 
 .mapv2-status--aberto {
-  color: #2de7a2;
-  background: rgba(45, 231, 162, 0.08);
-  border: 1px solid rgba(45, 231, 162, 0.2);
+  color: var(--success);
+  background: color-mix(in srgb, var(--success) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--success) 28%, transparent);
 }
 
 .mapv2-status--fechado {
-  color: #ff667f;
-  background: rgba(255, 102, 127, 0.08);
-  border: 1px solid rgba(255, 102, 127, 0.2);
+  color: var(--danger);
+  background: color-mix(in srgb, var(--danger) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--danger) 28%, transparent);
 }
 
 .mapv2-meta-block {
@@ -148,7 +149,7 @@
   font-size: 12px;
   letter-spacing: 0.06em;
   font-weight: 600;
-  color: rgba(240, 247, 255, 0.86);
+  color: var(--app-text-muted);
 }
 
 .mapv2-hours {
@@ -159,13 +160,13 @@
   font-size: 30px;
   font-size: clamp(20px, 1.3vw, 30px);
   line-height: 1.2;
-  color: #f7faff;
+  color: var(--app-text);
 }
 
 .mapv2-hours__icon {
   width: 20px;
   height: 20px;
-  color: #1db3ff;
+  color: var(--accent);
 }
 
 .mapv2-tags {
@@ -178,18 +179,18 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  border: 1px solid rgba(92, 123, 161, 0.22);
+  border: 1px solid var(--app-input-border);
   border-radius: 4px;
   padding: 6px 10px;
   font-size: 13px;
-  color: rgba(235, 243, 255, 0.94);
-  background: rgba(15, 24, 39, 0.42);
+  color: var(--app-text);
+  background: color-mix(in srgb, var(--app-input-background) 90%, transparent);
 }
 
 .mapv2-tag__icon {
   width: 14px;
   height: 14px;
-  color: #2cb8ff;
+  color: var(--accent);
 }
 
 .mapv2-actions {
@@ -221,13 +222,13 @@
 }
 
 .mapv2-btn--outline {
-  color: #25b6ff;
-  border: 1px solid rgba(37, 182, 255, 0.9);
+  color: var(--accent);
+  border: 1px solid var(--accent);
 }
 
 .mapv2-btn--danger {
-  color: #ff456c;
-  border: 1px solid rgba(255, 69, 108, 0.95);
+  color: var(--danger);
+  border: 1px solid var(--danger);
 }
 
 .mapv2-canvas {
@@ -235,9 +236,9 @@
   min-height: 680px;
   overflow: hidden;
   background:
-    radial-gradient(circle at 16% 15%, rgba(36, 180, 255, 0.22), transparent 14%),
-    radial-gradient(circle at 82% 20%, rgba(36, 180, 255, 0.16), transparent 16%),
-    linear-gradient(180deg, #1b2a3f 0%, #27384f 100%);
+    radial-gradient(circle at 16% 15%, var(--app-glow-primary), transparent 14%),
+    radial-gradient(circle at 82% 20%, var(--app-glow-secondary), transparent 16%),
+    var(--app-map-canvas);
 }
 
 .mapv2-search {
@@ -253,9 +254,9 @@
   justify-content: center;
   gap: 10px;
   border-radius: 999px;
-  border: 1px solid rgba(108, 147, 186, 0.28);
-  background: rgba(14, 26, 44, 0.9);
-  color: #eef6ff;
+  border: 1px solid var(--app-input-border);
+  background: color-mix(in srgb, var(--app-input-background) 92%, transparent);
+  color: var(--app-text);
   font-family: Inter, system-ui, sans-serif;
 }
 

@@ -4,7 +4,6 @@ import {
   Clock3,
   Cpu,
   MapPin,
-  Recycle,
   Search,
   TriangleAlert,
 } from 'lucide-react';

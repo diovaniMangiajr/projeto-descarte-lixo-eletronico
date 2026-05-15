@@ -4,13 +4,38 @@
   line-height: 1.5;
   font-weight: 400;
   color: #edf4ff;
-  background:
-    radial-gradient(circle at top, rgba(0, 183, 255, 0.18), transparent 32%),
-    linear-gradient(180deg, #0d1423 0%, #172231 100%);
+  background: #0f1828;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  --app-background: #0f1828;
+  --app-text: #edf4ff;
+  --app-text-muted: #97a7bc;
+  --app-header-background: rgba(11, 19, 33, 0.92);
+  --app-header-border: rgba(122, 159, 198, 0.12);
+  --app-header-shadow: 0 10px 30px rgba(6, 12, 24, 0.18);
+  --app-link-hover: rgba(47, 182, 255, 0.08);
+  --app-link-border-active: rgba(47, 182, 255, 0.28);
+  --app-surface-primary: #1d2a3e;
+  --app-surface-secondary: #243349;
+  --app-surface-soft: #2e3d53;
+  --app-card-background: rgba(20, 33, 53, 0.94);
+  --app-card-border: rgba(88, 130, 175, 0.28);
+  --app-card-shadow: 0 22px 52px rgba(8, 14, 26, 0.34);
+  --app-glow-primary: rgba(36, 180, 255, 0.18);
+  --app-glow-secondary: rgba(36, 180, 255, 0.12);
+  --app-glow-tertiary: rgba(36, 180, 255, 0.08);
+  --app-input-background: rgba(13, 23, 38, 0.62);
+  --app-input-border: rgba(110, 145, 182, 0.25);
+  --app-map-canvas:
+    radial-gradient(circle at 16% 15%, var(--app-glow-primary), transparent 14%),
+    radial-gradient(circle at 82% 20%, var(--app-glow-secondary), transparent 16%),
+    linear-gradient(180deg, #1b2a3f 0%, #27384f 100%);
+  --accent: #25b6ff;
+  --accent-strong: #149de5;
+  --success: #2de7a2;
+  --danger: #ff667f;
   --bg: #0d1423;
   --bg-soft: #172231;
   --panel: rgba(16, 24, 40, 0.9);
@@ -22,6 +47,39 @@
   --success: #2ed48c;
   --warning: #ef6a7a;
   --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+  color: #1f2c3f;
+  background: #eef4fb;
+  --app-background: #eef4fb;
+  --app-text: #1f2c3f;
+  --app-text-muted: #5d7289;
+  --app-header-background: rgba(243, 249, 255, 0.96);
+  --app-header-border: rgba(120, 156, 194, 0.28);
+  --app-header-shadow: 0 10px 24px rgba(37, 61, 90, 0.12);
+  --app-link-hover: rgba(37, 182, 255, 0.12);
+  --app-link-border-active: rgba(37, 182, 255, 0.42);
+  --app-surface-primary: #dfe8f4;
+  --app-surface-secondary: #e9f1fb;
+  --app-surface-soft: #f4f8fd;
+  --app-card-background: rgba(255, 255, 255, 0.95);
+  --app-card-border: rgba(106, 141, 178, 0.3);
+  --app-card-shadow: 0 16px 34px rgba(21, 48, 79, 0.16);
+  --app-glow-primary: rgba(13, 157, 230, 0.12);
+  --app-glow-secondary: rgba(13, 157, 230, 0.08);
+  --app-glow-tertiary: rgba(13, 157, 230, 0.05);
+  --app-input-background: rgba(255, 255, 255, 0.94);
+  --app-input-border: rgba(115, 151, 189, 0.38);
+  --app-map-canvas:
+    radial-gradient(circle at 16% 15%, var(--app-glow-primary), transparent 14%),
+    radial-gradient(circle at 82% 20%, var(--app-glow-secondary), transparent 16%),
+    linear-gradient(180deg, #dce8f6 0%, #cfdfef 100%);
+  --accent: #0d9de6;
+  --accent-strong: #087bb5;
+  --success: #0f9f72;
+  --danger: #ce3d5e;
 }
 
 * {
@@ -36,8 +94,11 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background: inherit;
-  color: var(--text);
+  background:
+    radial-gradient(circle at 18% 12%, var(--app-glow-primary), transparent 28%),
+    radial-gradient(circle at 80% 8%, var(--app-glow-secondary), transparent 22%),
+    var(--app-background);
+  color: var(--app-text);
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
@@ -462,9 +523,9 @@ a {
   justify-content: space-between;
   gap: 24px;
   padding: 0 44px;
-  border-bottom: 1px solid rgba(122, 159, 198, 0.12);
-  background: rgba(11, 19, 33, 0.92);
-  box-shadow: 0 10px 30px rgba(6, 12, 24, 0.18);
+  border-bottom: 1px solid var(--app-header-border);
+  background: var(--app-header-background);
+  box-shadow: var(--app-header-shadow);
   backdrop-filter: blur(12px);
 }
 
@@ -474,14 +535,21 @@ a {
   font-weight: 800;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  color: var(--accent);
   font-family: 'Space Grotesk', system-ui, sans-serif;
 }
 
 .app-header__subtitle {
   margin: 2px 0 0;
-  color: var(--muted);
+  color: var(--app-text-muted);
   font-size: 0.92rem;
   font-family: Inter, system-ui, sans-serif;
+}
+
+.app-header__actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
 }
 
 .app-header__nav {
@@ -494,7 +562,7 @@ a {
   padding: 9px 14px;
   border: 1px solid transparent;
   border-radius: 999px;
-  color: var(--muted);
+  color: var(--app-text-muted);
   font-family: 'Space Grotesk', system-ui, sans-serif;
   transition:
     color 160ms ease,
@@ -504,9 +572,29 @@ a {
 
 .app-header__link:hover,
 .app-header__link--active {
-  color: var(--text);
-  border-color: rgba(47, 182, 255, 0.28);
-  background: rgba(47, 182, 255, 0.08);
+  color: var(--app-text);
+  border-color: var(--app-link-border-active);
+  background: var(--app-link-hover);
+}
+
+.app-header__theme-toggle {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border-radius: 999px;
+  border: 1px solid var(--app-link-border-active);
+  background: var(--app-link-hover);
+  color: var(--app-text);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.app-header__theme-toggle svg {
+  width: 14px;
+  height: 14px;
 }
 
 .eyebrow,

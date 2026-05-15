@@ -98,7 +98,7 @@ export function LoginPage() {
 
             {/* Lógica "E": Se houver um texto dentro de 'error', desenhe esse bloco vermelho abaixo */}
             {error && (
-              <div style={{ color: '#ff486e', fontSize: '13px', display: 'flex', alignItems: 'center', gap: '6px', marginTop: '4px' }}>
+              <div className="loginv2-error">
                 <AlertCircle size={14} />
                 <span>{error}</span>
               </div>

@@ -101,6 +101,7 @@ O frontend foi inicializado com Vite + React + TypeScript, React Router DOM e Ax
 - `frontend/src/pages`: páginas organizadas por rota e contexto.
 - `frontend/src/services/http`: cliente HTTP e integrações com API.
 - `frontend/src/styles`: estilos globais da aplicação.
+- `frontend/src/theme`: lógica dos temas, dark e light.
 
 As rotas iniciais disponíveis são:
 

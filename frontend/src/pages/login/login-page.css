@@ -1,7 +1,10 @@
 .loginv2 {
   min-height: 100vh;
-  color: #f2f6ff;
-  background: #223247;
+  color: var(--app-text);
+  background:
+    radial-gradient(circle at 18% 18%, var(--app-glow-primary), transparent 26%),
+    radial-gradient(circle at 82% 78%, var(--app-glow-secondary), transparent 30%),
+    linear-gradient(180deg, var(--app-surface-secondary) 0%, var(--app-surface-primary) 100%);
 }
 
 .loginv2-shell {
@@ -14,12 +17,11 @@
 .loginv2-card {
   width: min(100%, 520px);
   border-radius: 18px;
-  border: 1px solid rgba(35, 174, 246, 0.5);
+  border: 1px solid var(--app-card-border);
   background:
-    linear-gradient(106deg, rgba(30, 42, 64, 0.94) 0%, rgba(29, 42, 66, 0.92) 58%, rgba(24, 36, 58, 0.95) 100%);
-  box-shadow:
-    0 0 0 1px rgba(23, 169, 255, 0.14) inset,
-    0 28px 64px rgba(7, 13, 25, 0.5);
+    linear-gradient(180deg, color-mix(in srgb, var(--app-card-background) 96%, transparent) 0%, var(--app-card-background) 100%),
+    radial-gradient(circle at top right, var(--app-glow-tertiary), transparent 28%);
+  box-shadow: var(--app-card-shadow);
   padding: 28px;
 }
 
@@ -30,7 +32,7 @@
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #80d8ff;
+  color: var(--accent);
 }
 
 .loginv2-card h1 {
@@ -42,7 +44,7 @@
 
 .loginv2-copy {
   margin: 10px 0 0;
-  color: rgba(220, 232, 246, 0.78);
+  color: var(--app-text-muted);
   font-family: Inter, system-ui, sans-serif;
   font-size: 15px;
   line-height: 1.35;
@@ -63,7 +65,7 @@
   font-family: 'Space Grotesk', system-ui, sans-serif;
   font-size: 12px;
   letter-spacing: 0.06em;
-  color: rgba(230, 241, 255, 0.86);
+  color: var(--app-text-muted);
   text-transform: uppercase;
 }
 
@@ -72,8 +74,8 @@
   align-items: center;
   gap: 10px;
   border-radius: 10px;
-  border: 1px solid rgba(110, 145, 182, 0.25);
-  background: rgba(13, 23, 38, 0.62);
+  border: 1px solid var(--app-input-border);
+  background: var(--app-input-background);
   padding: 0 12px;
   min-height: 44px;
 }
@@ -81,7 +83,7 @@
 .loginv2-inputIcon {
   width: 16px;
   height: 16px;
-  color: rgba(126, 217, 255, 0.95);
+  color: var(--accent);
   flex: 0 0 auto;
 }
 
@@ -91,13 +93,13 @@
   border: 0;
   outline: none;
   background: transparent;
-  color: #f4f9ff;
+  color: var(--app-text);
   font-family: Inter, system-ui, sans-serif;
   font-size: 15px;
 }
 
 .loginv2-inputWrap input::placeholder {
-  color: rgba(175, 195, 219, 0.8);
+  color: var(--app-text-muted);
 }
 
 .loginv2-submit {
@@ -105,9 +107,9 @@
   width: 100%;
   min-height: 42px;
   border-radius: 10px;
-  border: 1px solid rgba(37, 182, 255, 0.9);
-  background: rgba(20, 42, 68, 0.45);
-  color: #1fb6ff;
+  border: 1px solid var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  color: var(--accent);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -126,7 +128,16 @@
 }
 
 .loginv2-submit:hover {
-  background: rgba(25, 64, 100, 0.46);
+  background: color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+.loginv2-error {
+  margin-top: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--danger);
+  font-size: 13px;
 }
 
 @media (max-width: 900px) {

@@ -1,8 +1,8 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { AppPaths } from './paths';
-import { AdminPage } from '@/pages/admin/AdminPage';
-import { LoginPage } from '@/pages/login/LoginPage';
-import { MapaPage } from '@/pages/mapa/MapaPage';
+import { AdminPage } from '../../pages/admin/AdminPage';
+import { LoginPage } from '../../pages/login/LoginPage';
+import { MapaPage } from '../../pages/mapa/MapaPage';
 
 export function AppRoutes() {
   return (
