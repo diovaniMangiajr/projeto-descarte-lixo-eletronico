@@ -1,3 +1,4 @@
+@import "tailwindcss";
 :root {
   color-scheme: dark;
   font-family: 'Space Grotesk', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -763,5 +764,14 @@ a {
 
   .map-sidebar {
     padding: 20px 16px;
+  }
+}
+
+@layer base {
+  .maplibregl-popup-content {
+    @apply bg-transparent! shadow-none! p-0! rounded-none!;
+  }
+  .maplibregl-popup-tip {
+    @apply hidden!;
   }
 }
