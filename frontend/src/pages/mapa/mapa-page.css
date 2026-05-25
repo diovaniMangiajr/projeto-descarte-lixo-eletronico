@@ -86,12 +86,21 @@
 .mapv2-location {
   margin: 6px 0 0;
   display: inline-flex;
-  align-items: center;
+  align-items: flex-start; /* Alterado de center para alinhar o ícone no topo se tiver 2 linhas */
   gap: 8px;
   font-family: Inter, system-ui, sans-serif;
   font-size: 15px;
   line-height: 1.2;
   color: var(--app-text);
+}
+
+/* A MÁGICA: Corta o texto em 2 linhas e coloca reticências (...) */
+.mapv2-location span {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .mapv2-card:not(.mapv2-card--featured) .mapv2-location {
@@ -101,7 +110,16 @@
 .mapv2-location__icon {
   width: 17px;
   height: 17px;
+  flex-shrink: 0; /* Impede que o ícone encolha quando o texto for gigante */
   color: var(--app-text-muted);
+  margin-top: 1px; /* Ajuste visual milimétrico para o ícone bater com o texto */
+}
+
+@media (max-width: 1400px) {
+  .mapv2-location,
+  .mapv2-card:not(.mapv2-card--featured) .mapv2-location {
+    font-size: 14px;
+  }
 }
 
 .mapv2-status {
@@ -306,11 +324,6 @@
 
   .mapv2-card__header h2 {
     font-size: 16px;
-  }
-
-  .mapv2-location,
-  .mapv2-card:not(.mapv2-card--featured) .mapv2-location {
-    font-size: 14px;
   }
 
   .mapv2-hours {
