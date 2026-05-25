@@ -20,3 +20,17 @@ api.interceptors.request.use((config) => {
 }, (error) => {
   return Promise.reject(error);
 });
+
+api.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    if (error.response?.status === 401 && window.location.pathname !== '/login') {
+      console.warn('Token inválido ou expirado. Limpando a sessão...');
+      localStorage.removeItem('@ELixo:token');
+      window.location.reload(); 
+    }
+    return Promise.reject(error);
+  }
+);
