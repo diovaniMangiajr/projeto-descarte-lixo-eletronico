@@ -55,7 +55,10 @@
 }
 
 .mapv2-card--featured {
-  height: 352px;
+  height: auto;
+  min-height: min-content;
+  display: flex;
+  flex-direction: column;
   border-color: var(--accent);
   box-shadow: var(--app-card-shadow);
   gap: 16px;
@@ -86,7 +89,7 @@
 .mapv2-location {
   margin: 6px 0 0;
   display: inline-flex;
-  align-items: flex-start; /* Alterado de center para alinhar o ícone no topo se tiver 2 linhas */
+  align-items: flex-start;
   gap: 8px;
   font-family: Inter, system-ui, sans-serif;
   font-size: 15px;
@@ -94,7 +97,6 @@
   color: var(--app-text);
 }
 
-/* A MÁGICA: Corta o texto em 2 linhas e coloca reticências (...) */
 .mapv2-location span {
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -110,9 +112,9 @@
 .mapv2-location__icon {
   width: 17px;
   height: 17px;
-  flex-shrink: 0; /* Impede que o ícone encolha quando o texto for gigante */
+  flex-shrink: 0;
   color: var(--app-text-muted);
-  margin-top: 1px; /* Ajuste visual milimétrico para o ícone bater com o texto */
+  margin-top: 1px;
 }
 
 @media (max-width: 1400px) {
@@ -188,9 +190,11 @@
 }
 
 .mapv2-tags {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  /* A CURA PARA O VAZAMENTO DO GRID: minmax(0, 1fr) permite encolher */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
+  margin-top: 8px;
 }
 
 .mapv2-tag {
@@ -203,17 +207,27 @@
   font-size: 13px;
   color: var(--app-text);
   background: color-mix(in srgb, var(--app-input-background) 90%, transparent);
+  min-width: 0; /* CRÍTICO: Deixa o flex item encolher abaixo do seu tamanho nativo */
+  max-width: 100%;
+}
+
+.mapv2-tag span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .mapv2-tag__icon {
   width: 14px;
   height: 14px;
+  flex-shrink: 0;
   color: var(--accent);
 }
 
 .mapv2-actions {
-  margin-top: 6px;
+  margin-top: auto; /* Garante que os botões fiquem colados no fundo do card */
   display: grid;
+  grid-template-columns: 1fr; /* FORÇA 1 coluna (um botão embaixo do outro) */
   gap: 12px;
 }
 
@@ -337,5 +351,8 @@
   .mapv2-btn {
     font-size: 12px;
   }
+  
+  .mapv2-actions {
+    grid-template-columns: 1fr; /* Empilha os botões se a tela for pequena */
+  }
 }
-

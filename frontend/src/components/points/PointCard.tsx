@@ -52,9 +52,13 @@ export function PointCard({ point, isSelected, onSelect, onNotifyFull }: PointCa
               <h3>MATERIAIS ACEITOS</h3>
               <div className="mapv2-tags">
                 {point.tiposProduto.map((material) => (
-                  <span key={material.id} className="mapv2-tag">
+                  <span 
+                    key={material.id} 
+                    className="mapv2-tag"
+                    title={material.nome} /* A MÁGICA DO HOVER AQUI */
+                  >
                     {getIconForMaterial(material.nome)}
-                    {material.nome}
+                    <span>{material.nome}</span>
                   </span>
                 ))}
               </div>
