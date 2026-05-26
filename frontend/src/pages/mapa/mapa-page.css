@@ -482,4 +482,23 @@
   .mapv2-actions {
     grid-template-columns: 1fr; /* Empilha os botões se a tela for pequena */
   }
+
+  /* Reseta o contêiner principal do marcador do MapLibre */
+.maplibregl-marker {
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  background: transparent !important;
+  /* Garante que o contêiner tenha exatamente o tamanho do seu dot */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Garante que o conteúdo interno (o ping e o dot) siga o reset */
+.maplibregl-marker > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 }
