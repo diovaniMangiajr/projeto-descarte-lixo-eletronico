@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { MapPin, Search } from 'lucide-react';
+import { MapPin, Search, X } from 'lucide-react';
 import { AppHeader } from '@/components/layout/AppHeader';
 import { Map, MapMarker, MarkerContent, MapControls, useMap, type MapRef } from '@/components/ui/map';
 import { useThemeMode } from '@/app/theme/ThemeProvider';
@@ -40,6 +40,13 @@ export function MapaPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedPointId, setSelectedPointId] = useState<string | null>(null);
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
+
+  const searchResults = points.filter((p) => {
+    const query = searchQuery.toLowerCase();
+    return p.nome.toLowerCase().includes(query) || p.endereco.toLowerCase().includes(query);
+  });
 
   // 1. Busca os pontos no Back-end ao abrir a tela
   useEffect(() => {
@@ -119,10 +126,63 @@ export function MapaPage() {
         </aside>
 
         <section className="mapv2-canvas" aria-label="Mapa de pontos de coleta">
-          <div className="mapv2-search">
-            <Search className="mapv2-search__icon" aria-hidden="true" />
-            <span>Buscar ponto de coleta no mapa...</span>
+          {/* --- NOVA BARRA DE PESQUISA --- */}
+          <div className="mapv2-search-wrapper">
+            <div className={`mapv2-search ${isSearchFocused ? 'mapv2-search--active' : ''}`}>
+              <Search className="mapv2-search__icon" aria-hidden="true" />
+              <input
+                type="text"
+                placeholder="Buscar por nome ou endereço..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onFocus={() => setIsSearchFocused(true)}
+                onBlur={() => {
+                  // Um pequeno atraso para dar tempo de registrar o clique na sugestão
+                  setTimeout(() => setIsSearchFocused(false), 200);
+                }}
+              />
+              {searchQuery && (
+                <button 
+                  type="button" 
+                  className="mapv2-search__clear" 
+                  onClick={() => setSearchQuery('')}
+                >
+                  <X size={16} />
+                </button>
+              )}
+            </div>
+
+            {/* CAIXA FLUTUANTE DE SUGESTÕES */}
+            {isSearchFocused && searchQuery && (
+              <div className="mapv2-search-dropdown">
+                {searchResults.length > 0 ? (
+                  searchResults.map((result) => (
+                    <button
+                      key={`search-${result.id}`}
+                      type="button"
+                      className="mapv2-search-item"
+                      onClick={() => {
+                        handleSelectPoint(result);
+                        setSearchQuery(''); // Limpa a busca após selecionar
+                        setIsSearchFocused(false);
+                      }}
+                    >
+                      <MapPin size={16} className="mapv2-search-item__icon" />
+                      <div className="mapv2-search-item__text">
+                        <strong>{result.nome}</strong>
+                        <span>{result.endereco}</span>
+                      </div>
+                    </button>
+                  ))
+                ) : (
+                  <div className="mapv2-search-empty">
+                    Nenhum ponto encontrado para "{searchQuery}"
+                  </div>
+                )}
+              </div>
+            )}
           </div>
+          {/* ----------------------------- */}
           
           <div className="absolute inset-0 z-0">
             <Map 

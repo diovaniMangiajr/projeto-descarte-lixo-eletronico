@@ -8,14 +8,29 @@
 }
 
 .mapv2-shell {
-  display: grid;
-  grid-template-columns: 459px minmax(0, 1fr);
-  min-height: calc(100vh - 76px);
+  display: flex;
+  flex: 1;
+  height: calc(100vh - 76px); 
+  overflow: hidden;
 }
 
 .mapv2-sidebar {
   padding: 24px 44px;
   border-right: 1px solid var(--app-header-border);
+  height: 100%; 
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.mapv2-sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+.mapv2-sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.mapv2-sidebar::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--app-text-muted) 30%, transparent);
+  border-radius: 10px;
 }
 
 .mapv2-intro {
@@ -39,7 +54,7 @@
 }
 
 .mapv2-list {
-  width: 371px;
+  width: 100%;
   display: grid;
   gap: 20px;
 }
@@ -264,8 +279,9 @@
 }
 
 .mapv2-canvas {
+  flex: 1;
   position: relative;
-  min-height: 680px;
+  height: 100%; 
   overflow: hidden;
   background:
     radial-gradient(circle at 16% 15%, var(--app-glow-primary), transparent 14%),
@@ -273,28 +289,139 @@
     var(--app-map-canvas);
 }
 
-.mapv2-search {
+.mapv2-search-wrapper {
   position: absolute;
   top: 28px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 1;
-  min-width: min(86%, 430px);
-  padding: 14px 20px;
-  display: inline-flex;
+  z-index: 10;
+  width: min(86%, 430px);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mapv2-search {
+  padding: 12px 20px;
+  display: flex;
   align-items: center;
-  justify-content: center;
   gap: 10px;
   border-radius: 999px;
   border: 1px solid var(--app-input-border);
-  background: color-mix(in srgb, var(--app-input-background) 92%, transparent);
+  background: color-mix(in srgb, var(--app-input-background) 95%, transparent);
+  backdrop-filter: blur(8px);
+  color: var(--app-text);
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.mapv2-search--active {
+  border-color: var(--accent);
+  background: var(--app-card-background);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.mapv2-search input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
   color: var(--app-text);
   font-family: Inter, system-ui, sans-serif;
+  font-size: 15px;
+}
+
+.mapv2-search input::placeholder {
+  color: var(--app-text-muted);
 }
 
 .mapv2-search__icon {
   width: 18px;
   height: 18px;
+  color: var(--app-text-muted);
+  flex-shrink: 0;
+}
+
+.mapv2-search__clear {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: var(--app-text-muted);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+}
+
+.mapv2-search__clear:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--app-text);
+}
+
+/* O Dropdown flutuante */
+.mapv2-search-dropdown {
+  background: var(--app-card-background);
+  border: 1px solid var(--app-card-border);
+  border-radius: 12px;
+  box-shadow: var(--app-card-shadow);
+  max-height: 300px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 8px 0;
+}
+
+.mapv2-search-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 16px;
+  background: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.mapv2-search-item:hover {
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+.mapv2-search-item__icon {
+  margin-top: 2px;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.mapv2-search-item__text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mapv2-search-item__text strong {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+  font-size: 14px;
+  color: var(--app-text);
+}
+
+.mapv2-search-item__text span {
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 12px;
+  color: var(--app-text-muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.mapv2-search-empty {
+  padding: 16px;
+  text-align: center;
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 14px;
+  color: var(--app-text-muted);
 }
 
 .mapv2-grid {
