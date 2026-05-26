@@ -7,6 +7,7 @@ import { Map, MapMarker, MarkerContent, MapControls, useMap, type MapRef } from 
 import { useThemeMode } from '@/app/theme/ThemeProvider';
 import { pontoColetaService, type PontoColetaResponse } from '@/services/pontoColeta.service';
 import { PointCard } from '@/components/points/PointCard';
+import { formatDistance } from '@/utils/distance';
 import './mapa-page.css';
 
 // Customizador de tema nativo (mantido igual)
@@ -110,15 +111,24 @@ export function MapaPage() {
           </div>
 
           <div className="mapv2-list">
-            {points.map((point) => (
-              <PointCard 
-                key={point.id}
-                point={point}
-                isSelected={selectedPointId === point.id}
-                onSelect={() => handleSelectPoint(point)}
-                onNotifyFull={handleNotifyFull}
-              />
-            ))}
+            {points.map((point) => {
+              // 1. Calcula a distância aqui, dentro do loop
+              const dist = userLocation 
+                ? formatDistance(userLocation.lat, userLocation.lng, Number(point.latitude), Number(point.longitude))
+                : undefined;
+
+              return (
+                <PointCard 
+                  key={point.id}
+                  point={point}
+                  distance={dist} // <--- Passando a distância para o card
+                  isSelected={selectedPointId === point.id}
+                  onSelect={() => handleSelectPoint(point)}
+                  onNotifyFull={handleNotifyFull}
+                />
+              );
+            })}
+            
             {points.length === 0 && (
               <p className="text-sm text-gray-500">Nenhum ponto de coleta cadastrado ainda.</p>
             )}

@@ -6,6 +6,7 @@ interface PointCardProps {
   isSelected: boolean;
   onSelect: () => void;
   onNotifyFull: (id: string) => void;
+  distance?: string;
 }
 
 function getIconForMaterial(nome: string) {
@@ -15,7 +16,7 @@ function getIconForMaterial(nome: string) {
   return <Cpu className="mapv2-tag__icon" aria-hidden="true" />;
 }
 
-export function PointCard({ point, isSelected, onSelect, onNotifyFull }: PointCardProps) {
+export function PointCard({ point, isSelected, onSelect, onNotifyFull, distance }: PointCardProps) {
   return (
     <article
       onClick={onSelect}
@@ -23,18 +24,22 @@ export function PointCard({ point, isSelected, onSelect, onNotifyFull }: PointCa
       className={`mapv2-card${isSelected ? ' mapv2-card--featured' : ''}`}
     >
       <div className="mapv2-card__header">
-        <div>
-          <h2>{point.nome}</h2>
-          <p className="mapv2-location">
-            <MapPin className="mapv2-location__icon" aria-hidden="true" />
-            <span>{point.endereco}</span>
-          </p>
+    
+        <h2>{point.nome}</h2>
+
+        <p className="mapv2-location">
+          <MapPin className="mapv2-location__icon" aria-hidden="true" />
+          <span>{point.endereco}</span>
+        </p>
+
+        <div className="mapv2-card__badges-row">
+          <span className={`mapv2-status mapv2-status--${point.aberto ? 'aberto' : 'fechado'}`}>
+            <span className="mapv2-status__dot" aria-hidden="true" />
+            {point.aberto ? 'ABERTO' : 'FECHADO'}
+          </span>
+          {distance && <span className="mapv2-distance-badge">{distance}</span>}
         </div>
 
-        <span className={`mapv2-status mapv2-status--${point.aberto ? 'aberto' : 'fechado'}`}>
-          <span className="mapv2-status__dot" aria-hidden="true" />
-          {point.aberto ? 'ABERTO' : 'FECHADO'}
-        </span>
       </div>
 
       {isSelected && (
@@ -55,7 +60,7 @@ export function PointCard({ point, isSelected, onSelect, onNotifyFull }: PointCa
                   <span 
                     key={material.id} 
                     className="mapv2-tag"
-                    title={material.nome} /* A MÁGICA DO HOVER AQUI */
+                    title={material.nome}
                   >
                     {getIconForMaterial(material.nome)}
                     <span>{material.nome}</span>
