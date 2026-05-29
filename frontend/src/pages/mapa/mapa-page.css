@@ -1,5 +1,6 @@
 .mapv2 {
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
   color: var(--app-text);
   background:
     radial-gradient(circle at 15% 14%, var(--app-glow-primary), transparent 22%),
@@ -10,8 +11,7 @@
 .mapv2-shell {
   display: grid;
   grid-template-columns: 540px minmax(0, 1fr);  
-  min-height: calc(100vh - 76px);
-  height: 100vh;
+  height: calc(100vh - 76px);
   overflow: hidden;
 }
 
