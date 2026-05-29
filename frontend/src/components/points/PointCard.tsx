@@ -6,6 +6,7 @@ interface PointCardProps {
   isSelected: boolean;
   onSelect: () => void;
   onNotifyFull: (id: string) => void;
+  onReportProblem: (point: PontoColetaResponse) => void;
   distance?: string;
 }
 
@@ -16,7 +17,7 @@ function getIconForMaterial(nome: string) {
   return <Cpu className="mapv2-tag__icon" aria-hidden="true" />;
 }
 
-export function PointCard({ point, isSelected, onSelect, onNotifyFull, distance }: PointCardProps) {
+export function PointCard({ point, isSelected, onSelect, onNotifyFull, onReportProblem, distance }: PointCardProps) {
   return (
     <article
       onClick={onSelect}
@@ -85,7 +86,10 @@ export function PointCard({ point, isSelected, onSelect, onNotifyFull, distance 
             <button 
               type="button" 
               className="mapv2-btn mapv2-btn--danger"
-              onClick={(e) => e.stopPropagation()}
+              onClick={(e) => {
+                e.stopPropagation();
+                onReportProblem(point); // <--- CHAMA A FUNÇÃO PASSANDO O PONTO
+              }}
             >
               <TriangleAlert className="mapv2-btn__icon" aria-hidden="true" />
               RELATAR PROBLEMA

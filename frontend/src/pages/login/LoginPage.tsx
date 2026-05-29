@@ -60,7 +60,7 @@ export function LoginPage() {
             Acesse para gerenciar pontos de coleta e validar relatórios.
           </p>
 
-          <form className="loginv2-form" onSubmit={handleLogin}>
+          <form className="loginv2-form" onSubmit={handleLogin} noValidate>
             
             <label className="loginv2-field">
               <span>E-mail</span>

@@ -8,9 +8,9 @@ import { useThemeMode } from '@/app/theme/ThemeProvider';
 import { pontoColetaService, type PontoColetaResponse } from '@/services/pontoColeta.service';
 import { PointCard } from '@/components/points/PointCard';
 import { formatDistance } from '@/utils/distance';
+import { ReportModal } from '@/components/points/ReportModal';
 import './mapa-page.css';
 
-// Customizador de tema nativo (mantido igual)
 function MapThemeCustomizer({ themeMode }: { themeMode: string }) {
   const { map, isLoaded } = useMap();
 
@@ -36,7 +36,6 @@ export function MapaPage() {
   const { themeMode } = useThemeMode();
   const mapRef = useRef<MapRef>(null);
 
-  // Estados de Integração
   const [points, setPoints] = useState<PontoColetaResponse[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedPointId, setSelectedPointId] = useState<string | null>(null);
@@ -44,19 +43,21 @@ export function MapaPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchFocused, setIsSearchFocused] = useState(false);
 
+  const [isReportModalOpen, setIsReportModalOpen] = useState(false);
+  const [pointToReport, setPointToReport] = useState<PontoColetaResponse | null>(null);
+
   const searchResults = points.filter((p) => {
     const query = searchQuery.toLowerCase();
     return p.nome.toLowerCase().includes(query) || p.endereco.toLowerCase().includes(query);
   });
 
-  // 1. Busca os pontos no Back-end ao abrir a tela
   useEffect(() => {
     async function fetchPoints() {
       try {
         const data = await pontoColetaService.findAll();
         setPoints(data);
         if (data.length > 0) {
-          setSelectedPointId(data[0].id); // Seleciona o primeiro da lista
+          setSelectedPointId(data[0].id);
         }
       } catch (error) {
         console.error("Erro ao buscar pontos:", error);
@@ -67,7 +68,6 @@ export function MapaPage() {
     fetchPoints();
   }, []);
 
-  // 2. Busca a localização do usuário
   useEffect(() => {
     if (!('geolocation' in navigator)) return;
     navigator.geolocation.getCurrentPosition(
@@ -84,6 +84,11 @@ export function MapaPage() {
       zoom: 15,
       duration: 1200,
     });
+  };
+
+  const handleOpenReportModal = (point: PontoColetaResponse) => {
+    setPointToReport(point);
+    setIsReportModalOpen(true);
   };
 
   const handleNotifyFull = async (id: string) => {
@@ -112,7 +117,6 @@ export function MapaPage() {
 
           <div className="mapv2-list">
             {points.map((point) => {
-              // 1. Calcula a distância aqui, dentro do loop
               const dist = userLocation 
                 ? formatDistance(userLocation.lat, userLocation.lng, Number(point.latitude), Number(point.longitude))
                 : undefined;
@@ -121,10 +125,11 @@ export function MapaPage() {
                 <PointCard 
                   key={point.id}
                   point={point}
-                  distance={dist} // <--- Passando a distância para o card
+                  distance={dist}
                   isSelected={selectedPointId === point.id}
                   onSelect={() => handleSelectPoint(point)}
                   onNotifyFull={handleNotifyFull}
+                  onReportProblem={handleOpenReportModal}
                 />
               );
             })}
@@ -136,7 +141,6 @@ export function MapaPage() {
         </aside>
 
         <section className="mapv2-canvas" aria-label="Mapa de pontos de coleta">
-          {/* --- NOVA BARRA DE PESQUISA --- */}
           <div className="mapv2-search-wrapper">
             <div className={`mapv2-search ${isSearchFocused ? 'mapv2-search--active' : ''}`}>
               <Search className="mapv2-search__icon" aria-hidden="true" />
@@ -147,7 +151,6 @@ export function MapaPage() {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onFocus={() => setIsSearchFocused(true)}
                 onBlur={() => {
-                  // Um pequeno atraso para dar tempo de registrar o clique na sugestão
                   setTimeout(() => setIsSearchFocused(false), 200);
                 }}
               />
@@ -162,7 +165,6 @@ export function MapaPage() {
               )}
             </div>
 
-            {/* CAIXA FLUTUANTE DE SUGESTÕES */}
             {isSearchFocused && searchQuery && (
               <div className="mapv2-search-dropdown">
                 {searchResults.length > 0 ? (
@@ -173,7 +175,7 @@ export function MapaPage() {
                       className="mapv2-search-item"
                       onClick={() => {
                         handleSelectPoint(result);
-                        setSearchQuery(''); // Limpa a busca após selecionar
+                        setSearchQuery('');
                         setIsSearchFocused(false);
                       }}
                     >
@@ -192,7 +194,7 @@ export function MapaPage() {
               </div>
             )}
           </div>
-          {/* ----------------------------- */}
+      
           
           <div className="absolute inset-0 z-0">
             <Map 
@@ -204,7 +206,6 @@ export function MapaPage() {
               <MapThemeCustomizer themeMode={themeMode} />
               <MapControls position="bottom-right" showZoom={true} showLocate={true} />
 
-              {/* Bolinha do Usuário */}
               {userLocation && (
                 <MapMarker longitude={userLocation.lng} latitude={userLocation.lat}>
                   <MarkerContent>
@@ -216,11 +217,10 @@ export function MapaPage() {
                 </MapMarker>
               )}
 
-              {/* Pinos dos Pontos de Coleta */}
+    
               {points.map((point) => {
                 const isSelected = selectedPointId === point.id;
                 
-                // Usa a variável que vem direto do backend!
                 const baseColor = !isSelected 
                   ? 'var(--app-text-muted)' 
                   : point.aberto ? 'var(--success)' : 'var(--danger)';
@@ -273,6 +273,11 @@ export function MapaPage() {
           </div>
         </section>
       </section>
+      <ReportModal 
+        isOpen={isReportModalOpen} 
+        onClose={() => setIsReportModalOpen(false)} 
+        point={pointToReport} 
+      />
     </main>
   );
 }
