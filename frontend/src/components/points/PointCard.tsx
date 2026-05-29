@@ -88,7 +88,7 @@ export function PointCard({ point, isSelected, onSelect, onNotifyFull, onReportP
               className="mapv2-btn mapv2-btn--danger"
               onClick={(e) => {
                 e.stopPropagation();
-                onReportProblem(point); // <--- CHAMA A FUNÇÃO PASSANDO O PONTO
+                onReportProblem(point);
               }}
             >
               <TriangleAlert className="mapv2-btn__icon" aria-hidden="true" />

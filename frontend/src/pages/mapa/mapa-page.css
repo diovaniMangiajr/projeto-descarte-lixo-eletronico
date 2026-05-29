@@ -685,22 +685,6 @@ select.mapv2-input {
   opacity: 0.55;
 }
 
-.maplibregl-marker {
-  padding: 0 !important;
-  margin: 0 !important;
-  border: none !important;
-  background: transparent !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-
-.maplibregl-marker > div {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 @media (max-width: 1200px) {
   .mapv2-shell {
     grid-template-columns: 1fr;

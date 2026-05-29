@@ -16,19 +16,73 @@ function MapThemeCustomizer({ themeMode }: { themeMode: string }) {
 
   useEffect(() => {
     if (!isLoaded || !map) return;
-    const rootStyles = getComputedStyle(document.documentElement);
-    const surfacePrimary = rootStyles.getPropertyValue('--app-surface-primary').trim();
-    const surfaceSecondary = rootStyles.getPropertyValue('--app-surface-secondary').trim();
 
     if (themeMode === 'dark') {
+      // 🎨 PALETA ABISSAL (Tons profundos para não brigar com a UI do app)
+      const palette = {
+        base: '#0B1120',         // Fundo da terra vazio
+        water: '#051121',        // Água: Azul ultra escuro (quase preto)
+        urban: '#111827',        // Áreas residenciais/comerciais (Sem verde!)
+        building: '#1F2937',     // Prédios levemente destacados
+        road: '#374151',         // Ruas cinza chumbo
+        text: '#6B7280'          // Textos suaves
+      };
+
       try {
-        if (map.getLayer('background')) map.setPaintProperty('background', 'background-color', surfacePrimary);
-        if (map.getLayer('water')) map.setPaintProperty('water', 'fill-color', surfaceSecondary);
+        const layers = map.getStyle().layers;
+
+        layers.forEach((layer) => {
+          const id = layer.id.toLowerCase();
+
+          // ⚠️ PULO DO GATO: Remove texturas (patterns) nativas que "escurecem" ou bugam o mapa
+          if (layer.type === 'fill' && map.getPaintProperty(layer.id, 'fill-pattern')) {
+            map.setPaintProperty(layer.id, 'fill-pattern', null);
+          }
+
+          // 1. ÁGUA (Oceano, rios, lagos)
+          if (id.includes('water') || id.includes('ocean') || id.includes('sea') || id.includes('lake') || id.includes('river')) {
+            if (layer.type === 'fill') map.setPaintProperty(layer.id, 'fill-color', palette.water);
+            if (layer.type === 'line') map.setPaintProperty(layer.id, 'line-color', palette.water);
+          }
+          // 3. USO DO SOLO URBANO (Bairros, comércio - Resolve o bug do "tudo verde")
+          else if (id.includes('landuse') || id.includes('landcover') || id.includes('urban') || id.includes('residential')) {
+            if (layer.type === 'fill') map.setPaintProperty(layer.id, 'fill-color', palette.urban);
+          }
+          // 4. PRÉDIOS E CONSTRUÇÕES
+          else if (id.includes('building')) {
+            if (layer.type === 'fill') map.setPaintProperty(layer.id, 'fill-color', palette.building);
+          }
+          // 5. RUAS E ESTRADAS
+          else if (id.includes('road') || id.includes('highway') || id.includes('street') || id.includes('path') || id.includes('bridge') || id.includes('tunnel')) {
+            if (layer.type === 'line') map.setPaintProperty(layer.id, 'line-color', palette.road);
+            
+            // Oculta as "bordas" nativas das ruas para limpar o visual escuro
+            if (id.includes('casing') || id.includes('outline')) {
+              map.setPaintProperty(layer.id, 'line-opacity', 0);
+            }
+          }
+          // 6. FUNDO GERAL (A terra firme abaixo de tudo)
+          else if (id === 'background' || id.includes('bg') || id === 'land') {
+            if (layer.type === 'background') map.setPaintProperty(layer.id, 'background-color', palette.base);
+            if (layer.type === 'fill') map.setPaintProperty(layer.id, 'fill-color', palette.base);
+          }
+          // 7. TEXTOS DO MAPA
+          else if (layer.type === 'symbol') {
+            if (map.getPaintProperty(layer.id, 'text-color')) {
+              map.setPaintProperty(layer.id, 'text-color', palette.text);
+            }
+            if (map.getPaintProperty(layer.id, 'text-halo-width')) {
+              map.setPaintProperty(layer.id, 'text-halo-width', 0);
+            }
+          }
+        });
+
       } catch (err) {
-        console.warn('Map layers not fully loaded yet', err);
+        console.warn('As camadas do mapa ainda não estão prontas para pintura', err);
       }
     }
   }, [map, isLoaded, themeMode]);
+
   return null;
 }
 
@@ -209,7 +263,7 @@ export function MapaPage() {
               {userLocation && (
                 <MapMarker longitude={userLocation.lng} latitude={userLocation.lat}>
                   <MarkerContent>
-                    <div className="pointer-events-none relative flex items-center justify-center">
+                    <div className="pointer-events-none relative flex h-8 w-8 items-center justify-center">
                       <div className="absolute h-8 w-8 animate-ping rounded-full bg-blue-500 opacity-40" />
                       <div className="relative h-4 w-4 rounded-full border-2 border-white bg-blue-500 shadow-md" />
                     </div>
