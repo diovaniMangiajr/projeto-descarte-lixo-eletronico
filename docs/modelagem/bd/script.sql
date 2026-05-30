@@ -30,7 +30,8 @@ CREATE TABLE pontos_coleta (
     uf VARCHAR(2) DEFAULT 'MG' NOT NULL,
     latitude DECIMAL(10, 8),  
     longitude DECIMAL(11, 8), 
-    horario_funcionamento VARCHAR(150),
+    horario_abertura TIME NOT NULL,     
+    horario_fechamento TIME NOT NULL,   
     ativo BOOLEAN DEFAULT TRUE,
     criado_por INT REFERENCES usuarios_admin(id),
     criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -52,5 +53,3 @@ CREATE TABLE feedbacks_cidadao (
     resolvido BOOLEAN DEFAULT FALSE,    
     criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
-
-
