@@ -1,11 +1,10 @@
-import { Battery, Bolt, Clock3, Cpu, MapPin, TriangleAlert, Trash2 } from 'lucide-react';
+import { Battery, Bolt, Clock3, Cpu, MapPin, TriangleAlert } from 'lucide-react';
 import type { PontoColetaResponse } from '@/services/pontoColeta.service';
 
 interface PointCardProps {
   point: PontoColetaResponse;
   isSelected: boolean;
   onSelect: () => void;
-  onNotifyFull: (id: string) => void;
   onReportProblem: (point: PontoColetaResponse) => void;
   distance?: string;
 }
@@ -17,7 +16,7 @@ function getIconForMaterial(nome: string) {
   return <Cpu className="mapv2-tag__icon" aria-hidden="true" />;
 }
 
-export function PointCard({ point, isSelected, onSelect, onNotifyFull, onReportProblem, distance }: PointCardProps) {
+export function PointCard({ point, isSelected, onSelect, onReportProblem, distance }: PointCardProps) {
   return (
     <article
       onClick={onSelect}
@@ -25,9 +24,7 @@ export function PointCard({ point, isSelected, onSelect, onNotifyFull, onReportP
       className={`mapv2-card${isSelected ? ' mapv2-card--featured' : ''}`}
     >
       <div className="mapv2-card__header">
-    
         <h2>{point.nome}</h2>
-
         <p className="mapv2-location">
           <MapPin className="mapv2-location__icon" aria-hidden="true" />
           <span>{point.endereco}</span>
@@ -40,7 +37,6 @@ export function PointCard({ point, isSelected, onSelect, onNotifyFull, onReportP
           </span>
           {distance && <span className="mapv2-distance-badge">{distance}</span>}
         </div>
-
       </div>
 
       {isSelected && (
@@ -58,11 +54,7 @@ export function PointCard({ point, isSelected, onSelect, onNotifyFull, onReportP
               <h3>MATERIAIS ACEITOS</h3>
               <div className="mapv2-tags">
                 {point.tiposProduto.map((material) => (
-                  <span 
-                    key={material.id} 
-                    className="mapv2-tag"
-                    title={material.nome}
-                  >
+                  <span key={material.id} className="mapv2-tag" title={material.nome}>
                     {getIconForMaterial(material.nome)}
                     <span>{material.nome}</span>
                   </span>
@@ -72,17 +64,6 @@ export function PointCard({ point, isSelected, onSelect, onNotifyFull, onReportP
           )}
 
           <div className="mapv2-actions">
-            <button 
-              type="button" 
-              className="mapv2-btn mapv2-btn--outline"
-              onClick={(e) => {
-                e.stopPropagation();
-                onNotifyFull(point.id);
-              }}
-            >
-              <Trash2 className="mapv2-btn__icon" aria-hidden="true" />
-              AVISAR LIXEIRA CHEIA
-            </button>
             <button 
               type="button" 
               className="mapv2-btn mapv2-btn--danger"

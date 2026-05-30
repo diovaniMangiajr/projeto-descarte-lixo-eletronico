@@ -145,15 +145,6 @@ export function MapaPage() {
     setIsReportModalOpen(true);
   };
 
-  const handleNotifyFull = async (id: string) => {
-    try {
-      await pontoColetaService.notifyFull(id);
-      alert('Obrigado! A prefeitura foi notificada sobre a lixeira cheia.');
-    } catch (error) {
-      alert('Erro ao enviar notificação.');
-    }
-  };
-
   if (isLoading) {
     return <div className="flex min-h-screen items-center justify-center">Carregando mapa...</div>;
   }
@@ -182,7 +173,6 @@ export function MapaPage() {
                   distance={dist}
                   isSelected={selectedPointId === point.id}
                   onSelect={() => handleSelectPoint(point)}
-                  onNotifyFull={handleNotifyFull}
                   onReportProblem={handleOpenReportModal}
                 />
               );
