@@ -36,12 +36,10 @@ export function PointFormModal({
         const materiaisAtivos = response.data;
         setTiposProduto(materiaisAtivos);
 
-        // A MÁGICA: Higienização contra IDs fantasmas (materiais deletados)
         if (mode === 'edit' && formState.tipoProdutoIds.length > 0) {
           const activeIds = materiaisAtivos.map(m => m.id);
           const validIds = formState.tipoProdutoIds.filter(id => activeIds.includes(id));
           
-          // Se o Ponto tinha um material que foi inativado, atualizamos o estado silenciosamente
           if (validIds.length !== formState.tipoProdutoIds.length) {
             onChange('tipoProdutoIds', validIds);
           }
@@ -55,7 +53,6 @@ export function PointFormModal({
     }
 
     fetchMateriais();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mode]);
 
   return (
@@ -68,7 +65,6 @@ export function PointFormModal({
       >
         <header className="adminv2-dialog__header">
           <div>
-            <p className="adminv2-dialog__eyebrow">US02 - CRUD de pontos</p>
             <h3>{modalTitle}</h3>
           </div>
           <button type="button" className="adminv2-dialog__close" onClick={onClose} aria-label="Fechar" disabled={isSubmitting}>

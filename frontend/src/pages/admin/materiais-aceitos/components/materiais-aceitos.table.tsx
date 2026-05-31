@@ -26,7 +26,6 @@ export const MateriaisAceitosTable: React.FC<MateriaisAceitosTableProps> = ({
         <article key={material.id} className="adminv2-table__row adminv2-table__item">
           <div className="adminv2-station">
             <span className="adminv2-stationIcon" aria-hidden="true">
-              {/* Usando nossa função inteligente passando a classe CSS */}
               {getIconForMaterial(material.nome, "adminv2-stationIcon__svg")}
             </span>
             <div>

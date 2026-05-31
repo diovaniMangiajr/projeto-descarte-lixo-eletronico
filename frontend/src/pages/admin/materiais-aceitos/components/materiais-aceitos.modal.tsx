@@ -5,7 +5,6 @@ import { TipoProdutoResponse } from '../services/response/materiais-aceitos.resp
 interface MateriaisAceitosModalProps {
   isOpen: boolean;
   onClose: () => void;
-  // Corrigido para camelCase para bater com o DTO do Back-end
   onSave: (data: { nome: string; descricaoExemplos: string }) => void;
   materialToEdit: TipoProdutoResponse | null;
 }
@@ -34,7 +33,6 @@ export const MateriaisAceitosModal: React.FC<MateriaisAceitosModalProps> = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!nome.trim() || !descricao.trim()) return;
-    // Enviando com o nome exato que o Spring Boot espera
     onSave({ nome, descricaoExemplos: descricao });
     onClose();
   };

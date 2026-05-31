@@ -5,7 +5,7 @@ import { AppHeader } from '@/components/layout/AppHeader';
 import { AdminSidebar } from '@/components/layout/AdminSidebar'; 
 import { MateriaisAceitosTable } from './components/materiais-aceitos.table';
 import { MateriaisAceitosModal } from './components/materiais-aceitos.modal';
-import { MateriaisAceitosDeleteModal } from './components/materiais-aceitos-delete.modal'; // IMPORT DO NOVO MODAL
+import { MateriaisAceitosDeleteModal } from './components/materiais-aceitos-delete.modal';
 import { materiaisAceitosService } from './services/materiais-aceitos.service';
 import { TipoProdutoResponse, SpringPage } from './services/response/materiais-aceitos.response';
 
@@ -14,11 +14,9 @@ export const MateriaisAceitosPage: React.FC = () => {
   
   const [materiaisPage, setMateriaisPage] = useState<SpringPage<TipoProdutoResponse> | null>(null);
   
-  // Estados para o modal de Criação/Edição
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedMaterial, setSelectedMaterial] = useState<TipoProdutoResponse | null>(null);
   
-  // Estados para o modal de Exclusão
   const [materialPendingDeletion, setMaterialPendingDeletion] = useState<TipoProdutoResponse | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
   
@@ -56,22 +54,20 @@ export const MateriaisAceitosPage: React.FC = () => {
     }
   };
 
-  // NOVA LÓGICA DE EXCLUSÃO USANDO O ESTADO DE LOADING
   const executeDeleteMaterial = async () => {
     if (!materialPendingDeletion) return;
     
     try {
-      setIsDeleting(true); // Ativa o "Excluindo..."
+      setIsDeleting(true);
       await materiaisAceitosService.delete(materialPendingDeletion.id);
       
-      // Regra inteligente: se excluiu o último da página, volta pra anterior
       if (materiaisPage?.content.length === 1 && currentPage > 0) {
         setCurrentPage(prev => prev - 1);
       } else {
         carregarMateriais(currentPage);
       }
       
-      setMaterialPendingDeletion(null); // Fecha o modal
+      setMaterialPendingDeletion(null);
     } catch (error) {
       console.error('Erro ao excluir material:', error);
       alert('Erro ao excluir. Verifique a conexão com o servidor.');
@@ -117,7 +113,6 @@ export const MateriaisAceitosPage: React.FC = () => {
               <MateriaisAceitosTable
                 materiais={materiaisPage?.content || []}
                 onEdit={(material) => { setSelectedMaterial(material); setIsModalOpen(true); }}
-                // Em vez de excluir direto, abre o modal:
                 onDelete={(material) => setMaterialPendingDeletion(material)} 
               />
             )}
@@ -151,7 +146,6 @@ export const MateriaisAceitosPage: React.FC = () => {
         </section>
       </section>
 
-      {/* Renderiza o modal de Edição/Criação */}
       <MateriaisAceitosModal
         isOpen={isModalOpen}
         onClose={() => { setIsModalOpen(false); setSelectedMaterial(null); }}
@@ -159,7 +153,6 @@ export const MateriaisAceitosPage: React.FC = () => {
         materialToEdit={selectedMaterial}
       />
 
-      {/* Renderiza o modal de Confirmação de Exclusão */}
       {materialPendingDeletion && (
         <MateriaisAceitosDeleteModal
           material={materialPendingDeletion}
