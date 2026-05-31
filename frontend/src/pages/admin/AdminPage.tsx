@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronLeft, ChevronRight, Cpu, MapPinned, Pencil, Plus, Trash2, Users } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Cpu, MapPin, MapPinned, Pencil, Plus, Trash2, Users } from 'lucide-react';
 import { AppHeader } from '@/components/layout/AppHeader';
 import { AppPaths } from '@/app/routes/paths' 
 import { PointFormModal } from './PointFormModal';
@@ -8,6 +8,7 @@ import { DeleteConfirmModal } from './DeleteConfirmModal';
 import { pontoColetaService, type PontoColetaResponse, type PontoColetaRequest, type Page } from '@/services/pontoColeta.service';
 import type { AdminPointFormErrors, AdminPointFormState, AdminPointModalMode } from './admin.types';
 import './admin-page.css';
+import { AdminSidebar } from '@/components/layout/AdminSidebar';
 
 const emptyPointFormState: AdminPointFormState = {
   name: '',
@@ -162,40 +163,7 @@ export function AdminPage() {
     <main className="adminv2">
       <AppHeader />
       <section className="adminv2-shell">
-        <aside className="adminv2-sidebar">
-          <div className="adminv2-user">
-            <span className="adminv2-user__avatar" aria-hidden="true" />
-            <div>
-              <strong>Administrador</strong>
-              <p>Painel de Controle</p>
-            </div>
-          </div>
-          <nav className="adminv2-nav">
-            <button
-              type="button"
-              onClick={() => navigate(AppPaths.admin)}
-              className="adminv2-nav__item adminv2-nav__item--active"
-              style={{ width: '100%', textLeft: 'left', display: 'flex', itemsCenter: 'center', background: 'transparent', border: 'none', cursor: 'pointer' }}
-            >
-              <MapPinned className="adminv2-nav__icon" /> Pontos de Coleta
-            </button>
-            <button
-              type="button"
-              className="adminv2-nav__item"
-              style={{ width: '100%', textLeft: 'left', display: 'flex', itemsCenter: 'center', background: 'transparent', border: 'none', cursor: 'pointer' }}
-            >
-              <Users className="adminv2-nav__icon" /> Usuários
-            </button>
-            <button
-              type="button"
-              onClick={() => navigate(AppPaths.adminMateriais)}
-              className="adminv2-nav__item"
-              style={{ width: '100%', textLeft: 'left', display: 'flex', itemsCenter: 'center', background: 'transparent', border: 'none', cursor: 'pointer' }}
-            >
-              <Cpu className="adminv2-nav__icon" /> Materiais Aceitos
-            </button>
-          </nav>
-        </aside>
+        <AdminSidebar activeTab="pontos" />
 
         <section className="adminv2-content">
           <header className="adminv2-content__header">
@@ -230,7 +198,7 @@ export function AdminPage() {
                   <article key={point.id} className="adminv2-table__row adminv2-table__item">
                     <div className="adminv2-station">
                       <span className={`adminv2-stationIcon${!point.aberto ? ' adminv2-stationIcon--warn' : ''}`}>
-                        <Cpu className="adminv2-stationIcon__svg" />
+                        <MapPin className="adminv2-stationIcon__svg" />
                       </span>
                       <div>
                         <strong>{point.nome}</strong>

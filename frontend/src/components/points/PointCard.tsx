@@ -1,5 +1,6 @@
 import { Battery, Bolt, Clock3, Cpu, MapPin, TriangleAlert } from 'lucide-react';
 import type { PontoColetaResponse } from '@/services/pontoColeta.service';
+import { getIconForMaterial } from '@/utils/material-icons';
 
 interface PointCardProps {
   point: PontoColetaResponse;
@@ -7,13 +8,6 @@ interface PointCardProps {
   onSelect: () => void;
   onReportProblem: (point: PontoColetaResponse) => void;
   distance?: string;
-}
-
-function getIconForMaterial(nome: string) {
-  const n = nome.toLowerCase();
-  if (n.includes('pilha')) return <Battery className="mapv2-tag__icon" aria-hidden="true" />;
-  if (n.includes('bateria')) return <Bolt className="mapv2-tag__icon" aria-hidden="true" />;
-  return <Cpu className="mapv2-tag__icon" aria-hidden="true" />;
 }
 
 export function PointCard({ point, isSelected, onSelect, onReportProblem, distance }: PointCardProps) {
@@ -55,7 +49,7 @@ export function PointCard({ point, isSelected, onSelect, onReportProblem, distan
               <div className="mapv2-tags">
                 {point.tiposProduto.map((material) => (
                   <span key={material.id} className="mapv2-tag" title={material.nome}>
-                    {getIconForMaterial(material.nome)}
+                    {getIconForMaterial(material.nome, "mapv2-tag__icon")}
                     <span>{material.nome}</span>
                   </span>
                 ))}
