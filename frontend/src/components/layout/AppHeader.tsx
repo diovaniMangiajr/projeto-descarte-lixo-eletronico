@@ -2,17 +2,16 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { Moon, Sun, LogOut } from 'lucide-react';
 import { AppPaths } from '@/app/routes/paths';
 import { useThemeMode } from '@/app/theme/ThemeProvider';
+import { NotificacaoWidget } from './NotificacaoWidget'; // <-- Importe aqui!
 
 export function AppHeader() {
   const { themeMode, toggleThemeMode } = useThemeMode();
   const navigate = useNavigate();
 
-  // Verificaçao simples de autenticação (se o token existe)
   const isAuthenticated = !!localStorage.getItem('@ELixo:token');
 
   const handleLogout = () => {
     localStorage.removeItem('@ELixo:token');
-    // Força o reload da página para limpar qualquer estado em memória e volta pro mapa
     window.location.href = AppPaths.mapa; 
   };
 
@@ -44,6 +43,10 @@ export function AppHeader() {
               >
                 Painel Admin
               </NavLink>
+              
+              {/* NOSSO SININHO ENTRA AQUI */}
+              <NotificacaoWidget />
+
               <button 
                 type="button" 
                 className="app-header__link" 

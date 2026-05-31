@@ -117,7 +117,7 @@ export function AdminPage() {
 
       if (formModalMode === 'create') {
         await pontoColetaService.create(payload);
-        setCurrentPage(0); // Volta pra primeira página ao criar
+        setCurrentPage(0);
       } else if (formModalMode === 'edit' && pointBeingEditedId) {
         await pontoColetaService.update(pointBeingEditedId, payload);
       }

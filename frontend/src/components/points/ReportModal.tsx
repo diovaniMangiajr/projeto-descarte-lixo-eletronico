@@ -9,7 +9,6 @@ interface ReportModalProps {
   point: PontoColetaResponse | null;
 }
 
-// Opções espelhadas do Enum TipoRelato do Back-end
 const OPCOES_PROBLEMA: { value: TipoRelato; label: string }[] = [
   { value: 'PONTO_NAO_EXISTE', label: 'O ponto de coleta não existe aqui' },
   { value: 'LIXEIRA_DANIFICADA', label: 'Lixeira danificada ou vandalizada' },
@@ -65,13 +64,12 @@ export function ReportModal({ isOpen, onClose, point }: ReportModalProps) {
 
     try {
       setIsSubmitting(true);
-      
-      // Chamada real para a sua API!
+
       await relatoProblemaService.create(point.id, {
         tipoRelato: tipoRelato as TipoRelato,
         nome: nome,
         email: email,
-        observacao: observacao.trim() === '' ? undefined : observacao // Envia undefined se vazio
+        observacao: observacao.trim() === '' ? undefined : observacao
       });
 
       setStep('success');
@@ -105,10 +103,8 @@ export function ReportModal({ isOpen, onClose, point }: ReportModalProps) {
               </button>
             </div>
 
-            {/* maxHeight e overflow para garantir que não quebre a tela em monitores menores */}
             <div className="mapv2-modal__body" style={{ maxHeight: '65vh', overflowY: 'auto' }}>
               
-              {/* SELECT CUSTOMIZADO */}
               <div className="mapv2-form-group">
                 <label>Tipo de Problema</label>
                 <div style={{ position: 'relative' }}>
@@ -160,7 +156,6 @@ export function ReportModal({ isOpen, onClose, point }: ReportModalProps) {
                 </div>
               </div>
 
-              {/* DADOS DO USUÁRIO */}
               <div className="mapv2-form-group">
                 <label htmlFor="nome">Seu Nome</label>
                 <input 
@@ -187,7 +182,6 @@ export function ReportModal({ isOpen, onClose, point }: ReportModalProps) {
                 />
               </div>
 
-              {/* OBSERVAÇÃO */}
               <div className="mapv2-form-group">
                 <label htmlFor="observacao">
                   Observações <span style={{ fontWeight: 400, opacity: 0.7 }}>(Opcional)</span>
