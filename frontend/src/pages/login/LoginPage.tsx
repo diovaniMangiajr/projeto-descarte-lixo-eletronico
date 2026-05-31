@@ -1,15 +1,18 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { LockKeyhole, LogIn, Mail, AlertCircle, Loader2 } from 'lucide-react';
 import { AppHeader } from '@/components/layout/AppHeader';
 import { authService } from '@/services/auth.service';
+import { AppPaths } from '@/app/routes/paths'; // Importe os caminhos
 import './login-page.css';
 
 export function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  
   const [isLoading, setIsLoading] = useState(false);
+  
+  const navigate = useNavigate(); // <-- Hook de navegação
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault(); 
@@ -30,12 +33,11 @@ export function LoginPage() {
     
       const response = await authService.login({ email, senha: password });
       
-      localStorage.setItem('@ELixo:token', response.token);
+      // Salva o token corretamente lendo accessToken!
+      localStorage.setItem('@ELixo:token', response.accessToken);
       
-      console.log('Sucesso! O usuário está logado com o token:', response.token);
-      
-      // TODO: Redirecionar o usuário para a página de Admin (/admin)
-      // window.location.href = '/admin'; 
+      // Redireciona imediatamente para o painel administrativo
+      navigate(AppPaths.admin);
       
     } catch (err: any) {
       if (err.response?.status === 401) {

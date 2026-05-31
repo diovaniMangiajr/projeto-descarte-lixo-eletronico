@@ -1,16 +1,20 @@
-import { NavLink } from 'react-router-dom';
-import { Moon, Sun } from 'lucide-react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { Moon, Sun, LogOut } from 'lucide-react';
 import { AppPaths } from '@/app/routes/paths';
 import { useThemeMode } from '@/app/theme/ThemeProvider';
 
-const navItems = [
-  { label: 'Mapa', to: AppPaths.mapa },
-  { label: 'Admin', to: AppPaths.admin },
-  { label: 'Login', to: AppPaths.login },
-];
-
 export function AppHeader() {
   const { themeMode, toggleThemeMode } = useThemeMode();
+  const navigate = useNavigate();
+
+  // Verificaçao simples de autenticação (se o token existe)
+  const isAuthenticated = !!localStorage.getItem('@ELixo:token');
+
+  const handleLogout = () => {
+    localStorage.removeItem('@ELixo:token');
+    // Força o reload da página para limpar qualquer estado em memória e volta pro mapa
+    window.location.href = AppPaths.mapa; 
+  };
 
   return (
     <header className="app-header">
@@ -21,17 +25,45 @@ export function AppHeader() {
 
       <div className="app-header__actions">
         <nav className="app-header__nav" aria-label="Navegação principal">
-          {navItems.map((item) => (
+          <NavLink
+            to={AppPaths.mapa}
+            className={({ isActive }) =>
+              `app-header__link${isActive ? ' app-header__link--active' : ''}`
+            }
+          >
+            Mapa
+          </NavLink>
+
+          {isAuthenticated ? (
+            <>
+              <NavLink
+                to={AppPaths.admin}
+                className={({ isActive }) =>
+                  `app-header__link${isActive ? ' app-header__link--active' : ''}`
+                }
+              >
+                Painel Admin
+              </NavLink>
+              <button 
+                type="button" 
+                className="app-header__link" 
+                onClick={handleLogout}
+                style={{ background: 'transparent', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px' }}
+              >
+                <LogOut size={16} />
+                Sair
+              </button>
+            </>
+          ) : (
             <NavLink
-              key={item.to}
-              to={item.to}
+              to={AppPaths.login}
               className={({ isActive }) =>
                 `app-header__link${isActive ? ' app-header__link--active' : ''}`
               }
             >
-              {item.label}
+              Acesso Restrito
             </NavLink>
-          ))}
+          )}
         </nav>
 
         <button

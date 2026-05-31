@@ -12,7 +12,10 @@ export const api = axios.create({
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('@ELixo:token');
   
-  if (token && config.headers) {
+  const publicRoutes = ['/auth/login', '/relatos-problema'];
+  const isPublicRoute = publicRoutes.some(route => config.url?.includes(route));
+
+  if (token && token !== 'undefined' && config.headers && !isPublicRoute) {
     config.headers.Authorization = `Bearer ${token}`;
   }
   
