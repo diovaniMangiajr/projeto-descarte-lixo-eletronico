@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ChevronLeft, ChevronRight, Cpu, MapPinned, Pencil, Plus, Trash2, Users } from 'lucide-react';
 import { AppHeader } from '@/components/layout/AppHeader';
+import { AppPaths } from '@/app/routes/paths' 
 import { PointFormModal } from './PointFormModal';
 import { DeleteConfirmModal } from './DeleteConfirmModal';
 import { pontoColetaService, type PontoColetaResponse, type PontoColetaRequest, type Page } from '@/services/pontoColeta.service';
@@ -19,6 +21,7 @@ const emptyPointFormState: AdminPointFormState = {
 };
 
 export function AdminPage() {
+  const navigate = useNavigate();
   const [pointsPage, setPointsPage] = useState<Page<PontoColetaResponse> | null>(null);
   const [currentPage, setCurrentPage] = useState(0); 
   
@@ -168,15 +171,29 @@ export function AdminPage() {
             </div>
           </div>
           <nav className="adminv2-nav">
-            <a href="#" className="adminv2-nav__item adminv2-nav__item--active">
+            <button
+              type="button"
+              onClick={() => navigate(AppPaths.admin)}
+              className="adminv2-nav__item adminv2-nav__item--active"
+              style={{ width: '100%', textLeft: 'left', display: 'flex', itemsCenter: 'center', background: 'transparent', border: 'none', cursor: 'pointer' }}
+            >
               <MapPinned className="adminv2-nav__icon" /> Pontos de Coleta
-            </a>
-            <a href="#" className="adminv2-nav__item">
+            </button>
+            <button
+              type="button"
+              className="adminv2-nav__item"
+              style={{ width: '100%', textLeft: 'left', display: 'flex', itemsCenter: 'center', background: 'transparent', border: 'none', cursor: 'pointer' }}
+            >
               <Users className="adminv2-nav__icon" /> Usuários
-            </a>
-            <a href="#" className="adminv2-nav__item">
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate(AppPaths.adminMateriais)}
+              className="adminv2-nav__item"
+              style={{ width: '100%', textLeft: 'left', display: 'flex', itemsCenter: 'center', background: 'transparent', border: 'none', cursor: 'pointer' }}
+            >
               <Cpu className="adminv2-nav__icon" /> Materiais Aceitos
-            </a>
+            </button>
           </nav>
         </aside>
 

@@ -2,6 +2,7 @@ export const AppPaths = {
   home: '/',
   login: '/login',
   admin: '/admin',
+  adminMateriais: '/admin/materiais',
   mapa: '/mapa',
 } as const;
 
