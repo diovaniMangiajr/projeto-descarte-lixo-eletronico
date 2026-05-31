@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
-import { TipoProdutoResponse } from '@/services/pontoColeta.service';
+import { TipoProdutoResponse } from '../services/response/materiais-aceitos.response';
 
 interface MateriaisAceitosModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (data: { nome: string; descricao_exemplos: string }) => void;
+  // Corrigido para camelCase para bater com o DTO do Back-end
+  onSave: (data: { nome: string; descricaoExemplos: string }) => void;
   materialToEdit: TipoProdutoResponse | null;
 }
 
@@ -33,7 +34,8 @@ export const MateriaisAceitosModal: React.FC<MateriaisAceitosModalProps> = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!nome.trim() || !descricao.trim()) return;
-    onSave({ nome, descricao_exemplos: descricao });
+    // Enviando com o nome exato que o Spring Boot espera
+    onSave({ nome, descricaoExemplos: descricao });
     onClose();
   };
 
@@ -57,7 +59,7 @@ export const MateriaisAceitosModal: React.FC<MateriaisAceitosModalProps> = ({
               value={nome}
               onChange={(e) => setNome(e.target.value)}
               placeholder="Ex: Informática"
-              className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white placeholder-slate-500 focus:outline-hidden focus:border-sky-500 transition-colors"
+              className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white placeholder-slate-500 focus:outline-none focus:border-sky-500 transition-colors"
               required
             />
           </div>
@@ -69,7 +71,7 @@ export const MateriaisAceitosModal: React.FC<MateriaisAceitosModalProps> = ({
               onChange={(e) => setDescricao(e.target.value)}
               placeholder="Ex: Computadores, teclados, mouses."
               rows={3}
-              className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white placeholder-slate-500 focus:outline-hidden focus:border-sky-500 transition-colors resize-none"
+              className="w-full px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 text-white placeholder-slate-500 focus:outline-none focus:border-sky-500 transition-colors resize-none"
               required
             />
           </div>

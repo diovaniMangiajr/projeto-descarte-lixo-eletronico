@@ -1,34 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MapPinned, Users, Cpu, Plus, LayoutList, MoreVertical, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Plus, ChevronLeft, ChevronRight } from 'lucide-react';
 import { AppHeader } from '@/components/layout/AppHeader';
-import { AppPaths } from '@/app/routes/paths' // Garanta que este import aponte para o local correto do seu projeto
+import { AdminSidebar } from '@/components/layout/AdminSidebar'; 
 import { MateriaisAceitosTable } from './components/materiais-aceitos.table';
 import { MateriaisAceitosModal } from './components/materiais-aceitos.modal';
+import { MateriaisAceitosDeleteModal } from './components/materiais-aceitos-delete.modal'; // IMPORT DO NOVO MODAL
 import { materiaisAceitosService } from './services/materiais-aceitos.service';
-import { TipoProdutoResponse } from '@/services/pontoColeta.service';
+import { TipoProdutoResponse, SpringPage } from './services/response/materiais-aceitos.response';
 
 export const MateriaisAceitosPage: React.FC = () => {
   const navigate = useNavigate();
-  const [materiais, setMateriais] = useState<TipoProdutoResponse[]>([]);
+  
+  const [materiaisPage, setMateriaisPage] = useState<SpringPage<TipoProdutoResponse> | null>(null);
+  
+  // Estados para o modal de Criação/Edição
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedMaterial, setSelectedMaterial] = useState<TipoProdutoResponse | null>(null);
   
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
+  // Estados para o modal de Exclusão
+  const [materialPendingDeletion, setMaterialPendingDeletion] = useState<TipoProdutoResponse | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+  
+  const [currentPage, setCurrentPage] = useState(0); 
+  const [isLoading, setIsLoading] = useState(false);
 
-  const carregarMateriais = async () => {
+  const carregarMateriais = async (pageIndex: number) => {
     try {
-      const data = await materiaisAceitosService.findAll();
-      setMateriais(data);
+      setIsLoading(true);
+      const data = await materiaisAceitosService.findAllPaged(pageIndex, 5);
+      setMateriaisPage(data);
     } catch (error) {
       console.error('Erro ao buscar materiais da API:', error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    carregarMateriais();
-  }, []);
+    carregarMateriais(currentPage);
+  }, [currentPage]);
 
   const handleSaveMaterial = async (formData: { nome: string; descricaoExemplos: string }) => {
     try {
@@ -36,81 +47,51 @@ export const MateriaisAceitosPage: React.FC = () => {
         await materiaisAceitosService.update(selectedMaterial.id, formData);
       } else {
         await materiaisAceitosService.create(formData);
+        setCurrentPage(0); 
       }
-      carregarMateriais();
+      carregarMateriais(currentPage);
     } catch (error) {
       console.error('Erro ao salvar material:', error);
+      alert('Erro ao salvar os dados. Verifique o console.');
     }
   };
 
-  const handleDeleteMaterial = async (material: TipoProdutoResponse) => {
-    if (window.confirm(`Você está prestes a remover o tipo de resíduo: ${material.nome}. Deseja continuar?`)) {
-      try {
-        await materiaisAceitosService.delete(material.id);
-        carregarMateriais();
-      } catch (error) {
-        console.error('Erro ao excluir material:', error);
+  // NOVA LÓGICA DE EXCLUSÃO USANDO O ESTADO DE LOADING
+  const executeDeleteMaterial = async () => {
+    if (!materialPendingDeletion) return;
+    
+    try {
+      setIsDeleting(true); // Ativa o "Excluindo..."
+      await materiaisAceitosService.delete(materialPendingDeletion.id);
+      
+      // Regra inteligente: se excluiu o último da página, volta pra anterior
+      if (materiaisPage?.content.length === 1 && currentPage > 0) {
+        setCurrentPage(prev => prev - 1);
+      } else {
+        carregarMateriais(currentPage);
       }
+      
+      setMaterialPendingDeletion(null); // Fecha o modal
+    } catch (error) {
+      console.error('Erro ao excluir material:', error);
+      alert('Erro ao excluir. Verifique a conexão com o servidor.');
+    } finally {
+      setIsDeleting(false);
     }
   };
 
-  const totalItems = materiais.length;
-  const totalPages = Math.ceil(totalItems / itemsPerPage) || 1;
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = materiais.slice(indexOfFirstItem, indexOfLastItem);
-
-  const handlePrevPage = () => {
-    if (currentPage > 1) setCurrentPage(currentPage - 1);
-  };
-
-  const handleNextPage = () => {
-    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
-  };
+  const totalElements = materiaisPage?.totalElements || 0;
+  const startItem = totalElements === 0 ? 0 : currentPage * 5 + 1;
+  const endItem = Math.min((currentPage + 1) * 5, totalElements);
+  const isFirstPage = currentPage === 0;
+  const isLastPage = !materiaisPage || currentPage >= materiaisPage.totalPages - 1;
 
   return (
     <main className="adminv2">
       <AppHeader />
 
       <section className="adminv2-shell">
-        <aside className="adminv2-sidebar">
-          <div className="adminv2-user">
-            <span className="adminv2-user__avatar" aria-hidden="true" />
-            <div>
-              <strong>Leonardo Silva</strong>
-              <p>Administrador</p>
-            </div>
-          </div>
-
-          <nav className="adminv2-nav" aria-label="Navegação administrativa">
-            <button
-              type="button"
-              onClick={() => navigate(AppPaths.admin)}
-              className="adminv2-nav__item"
-              style={{ width: '100%', textLeft: 'left', display: 'flex', alignItems: 'center', background: 'transparent', border: 'none', cursor: 'pointer' }}
-            >
-              <MapPinned className="adminv2-nav__icon" aria-hidden="true" />
-              Pontos de Coleta
-            </button>
-            <button
-              type="button"
-              className="adminv2-nav__item"
-              style={{ width: '100%', textLeft: 'left', display: 'flex', alignItems: 'center', background: 'transparent', border: 'none', cursor: 'pointer' }}
-            >
-              <Users className="adminv2-nav__icon" aria-hidden="true" />
-              Usuários
-            </button>
-            <button
-              type="button"
-              onClick={() => navigate(AppPaths.adminMateriais)}
-              className="adminv2-nav__item adminv2-nav__item--active"
-              style={{ width: '100%', textLeft: 'left', display: 'flex', alignItems: 'center', background: 'transparent', border: 'none', cursor: 'pointer' }}
-            >
-              <Cpu className="adminv2-nav__icon" aria-hidden="true" />
-              Materiais Aceitos
-            </button>
-          </nav>
-        </aside>
+        <AdminSidebar activeTab="materiais" />
 
         <section className="adminv2-content">
           <header className="adminv2-content__header">
@@ -128,43 +109,39 @@ export const MateriaisAceitosPage: React.FC = () => {
           <section className="adminv2-tableCard" aria-label="Tabela de materiais aceitos">
             <header className="adminv2-tableCard__head">
               <h2>Materiais Aceitos</h2>
-              <div className="adminv2-tableCard__tools">
-                <button type="button" aria-label="Filtros">
-                  <LayoutList />
-                </button>
-                <button type="button" aria-label="Mais opções">
-                  <MoreVertical />
-                </button>
-              </div>
             </header>
 
-            <MateriaisAceitosTable
-              materiais={currentItems}
-              onEdit={(material) => { setSelectedMaterial(material); setIsModalOpen(true); }}
-              onDelete={handleDeleteMaterial}
-            />
+            {isLoading ? (
+               <div style={{ padding: '24px', textAlign: 'center' }}>Carregando dados...</div>
+            ) : (
+              <MateriaisAceitosTable
+                materiais={materiaisPage?.content || []}
+                onEdit={(material) => { setSelectedMaterial(material); setIsModalOpen(true); }}
+                // Em vez de excluir direto, abre o modal:
+                onDelete={(material) => setMaterialPendingDeletion(material)} 
+              />
+            )}
 
-            {/* Rodapé nativo de Paginação adicionado */}
             <footer className="adminv2-tableFooter">
               <p>
-                Exibindo {totalItems > 0 ? indexOfFirstItem + 1 : 0}-{Math.min(indexOfLastItem, totalItems)} de {totalItems} materiais
+                Exibindo {startItem} a {endItem} de {totalElements} materiais
               </p>
               <div className="adminv2-pagination">
                 <button 
                   type="button" 
                   aria-label="Anterior" 
-                  onClick={handlePrevPage} 
-                  disabled={currentPage === 1}
-                  style={{ opacity: currentPage === 1 ? 0.4 : 1, cursor: currentPage === 1 ? 'not-allowed' : 'pointer' }}
+                  onClick={() => setCurrentPage(p => Math.max(0, p - 1))} 
+                  disabled={isFirstPage || isLoading}
+                  style={{ opacity: isFirstPage ? 0.4 : 1, cursor: isFirstPage ? 'not-allowed' : 'pointer' }}
                 >
                   <ChevronLeft />
                 </button>
                 <button 
                   type="button" 
                   aria-label="Próximo" 
-                  onClick={handleNextPage} 
-                  disabled={currentPage === totalPages}
-                  style={{ opacity: currentPage === totalPages ? 0.4 : 1, cursor: currentPage === totalPages ? 'not-allowed' : 'pointer' }}
+                  onClick={() => setCurrentPage(p => p + 1)} 
+                  disabled={isLastPage || isLoading}
+                  style={{ opacity: isLastPage ? 0.4 : 1, cursor: isLastPage ? 'not-allowed' : 'pointer' }}
                 >
                   <ChevronRight />
                 </button>
@@ -174,12 +151,23 @@ export const MateriaisAceitosPage: React.FC = () => {
         </section>
       </section>
 
+      {/* Renderiza o modal de Edição/Criação */}
       <MateriaisAceitosModal
         isOpen={isModalOpen}
         onClose={() => { setIsModalOpen(false); setSelectedMaterial(null); }}
         onSave={handleSaveMaterial}
         materialToEdit={selectedMaterial}
       />
+
+      {/* Renderiza o modal de Confirmação de Exclusão */}
+      {materialPendingDeletion && (
+        <MateriaisAceitosDeleteModal
+          material={materialPendingDeletion}
+          isDeleting={isDeleting}
+          onClose={() => setMaterialPendingDeletion(null)}
+          onConfirm={executeDeleteMaterial}
+        />
+      )}
     </main>
   );
 };
