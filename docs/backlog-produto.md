@@ -17,8 +17,8 @@ Este documento apresenta o Product Backlog do projeto de desenvolvimento de uma 
 | US02 | Gestão de Pontos de Coleta (CRUD) | Alta | 8 | Pendente |
 | US03 | Visualização de Pontos (Mapa e Cards) | Alta | 8 | Pendente |
 | US04 | Detalhamento e Geolocalização do Usuário | Média | 5 | Pendente |
-| US05 | Gestão de Categorias e Feedbacks (Admin) | Média | 8 | Pendente |
-| US06 | Registro de Feedback de Campo (Cidadão) | Baixa | 3 | Pendente |
+| US05 | Gestão de Tipos de Produtos e Relatos de Problemas (Admin) | Média | 8 | Pendente |
+| US06 | Registro de Relato de Problema de Campo (Cidadão) | Baixa | 3 | Pendente |
 
 ---
 
@@ -39,7 +39,7 @@ Como Administrador do sistema de descarte de lixo eletrônico, eu quero realizar
 **Tarefas Técnicas (Sub-tasks):**
 * [TASK] Modelagem da entidade Usuário e persistência de credenciais no banco de dados. #7
 * [TASK] Configuração da lógica de segurança e filtros de autenticação (Backend). #8
-* [TASK] Desenvolvimento da interface web para o formulário de login e feedbacks de erro (Frontend). #9
+* [TASK] Desenvolvimento da interface web para o formulário de login e alertas de erro (Frontend). #9
 
 ---
 
@@ -98,36 +98,37 @@ Como Cidadão em deslocamento, eu quero ver minha localização no mapa e a dist
 
 ---
 
-### [US05] Gestão de Categorias e Feedbacks (Admin)
+### [US05] Gestão de Tipos de Produtos e Relatos de Problemas (Admin)
 **Descrição:**
-Como Administrador do sistema, eu quero gerenciar as categorias de materiais e moderar os feedbacks enviados pelos usuários para que o sistema se mantenha organizado e os problemas relatados sejam resolvidos.
+Como Administrador do sistema, eu quero gerenciar os tipos de produtos de lixo eletrônico e moderar os relatos de problemas enviados pelos usuários para que o sistema se mantenha organizado e os problemas relatados sejam resolvidos.
 
 **Critérios de Aceitação (Definition of Done):**
-* O administrador deve poder criar, editar e excluir categorias de lixo (ex: Pilhas, Monitores).
-* O sistema deve permitir listar todos os feedbacks enviados pelos cidadãos, ordenados por data.
-* Cada feedback deve estar vinculado a um ponto de coleta específico.
-* O administrador deve poder marcar um feedback como "Resolvido".
-* As categorias cadastradas devem estar disponíveis para seleção no momento da criação de um ponto de coleta.
+* O administrador deve poder criar, editar e excluir os tipos de produto de lixo eletrônico (ex: Pilhas, Monitores).
+* O sistema deve permitir listar todos os relatos de problemas enviados pelos cidadãos, ordenados por data.
+* Cada relato de problema deve estar vinculado a um ponto de coleta específico.
+* O administrador deve poder marcar um relato de problema como "Resolvido".
+* Os tipos de produtos de lixo eletrônico cadastrados devem estar disponíveis para seleção no momento da criação de um ponto de coleta.
 
 **Tarefas Técnicas (Sub-tasks):**
-* [TASK] CRUD de Categorias (Entidade, Controller e Interface Admin). #27
-* [TASK] Implementação da lógica de listagem e moderação de Feedbacks (Update status). #28
-* [TASK] Ajuste no formulário de pontos para vincular as categorias existentes (Relacionamento N:N). #29
+* [TASK] CRUD de tipos de produtos de lixo eletrônico (Entidade, Controller e Interface Admin). #27
+* [TASK] Implementação da lógica de listagem e moderação de relatos de problemas (Update status). #28
+* [TASK] Ajuste no formulário de pontos para vincular os tipos de produtos existentes (Relacionamento N:N). #29
+* [TASK] Implementação de trigger/serviço para geração automática de Notificação ao salvar um Relato de Problema. #68
 
 ---
 
-### [US06] Registro de Feedback de Campo (Cidadão)
+### [US06] Registro de Relato de Problema de Campo (Cidadão)
 **Descrição:**
-Como Cidadão utilizando um ponto de coleta, eu quero relatar um problema (ex: lixeira cheia) sobre um ponto específico para que a administração seja notificada e realize a manutenção necessária.
+Como Cidadão utilizando um ponto de coleta, eu quero enviar um relato de problema (ex: lixeira cheia) sobre um ponto específico para que a administração seja notificada e realize a manutenção necessária.
 
 **Critérios de Aceitação (Definition of Done):**
-* O sistema deve disponibilizar um formulário de feedback acessível na tela de detalhes do ponto.
+* O sistema deve disponibilizar um formulário de relato de problema acessível na tela de detalhes do ponto.
 * O usuário deve selecionar o tipo de problema via lista pré-definida (ENUM).
 * O sistema deve permitir o envio de um comentário opcional.
 * Deve haver uma mensagem de confirmação após o envio bem-sucedido.
-* Não deve ser necessário login para realizar o envio de feedback.
+* O sistema deve validar se os campos de nome e e-mail foram preenchidos antes de permitir o envio do relato.
 
 **Tarefas Técnicas (Sub-tasks):**
-* [TASK] Criação do formulário de feedback (Frontend). #30
-* [TASK] Criação do endpoint público de POST para recebimento de feedbacks. #31
+* [TASK] Criação do formulário de relato de problema (Frontend). #30
+* [TASK] Criação do endpoint público de POST para recebimento de relato de problemas. #31
 * [TASK] Implementação de validações básicas (anti-spam simples ou campos obrigatórios). #32

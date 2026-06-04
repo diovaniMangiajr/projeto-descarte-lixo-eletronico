@@ -23,9 +23,10 @@ O objetivo central desta sprint foi estabelecer o alicerce de alto nível e a fo
 | \#21 | \[TASK\] Configuração do mapa base e renderização de markers dinâmicos | Média | **Concluído** |
 | \#23 | \[TASK\] Integração com o endpoint de listagem pública de pontos | Alta | **Iniciado / Pendente** |
 | \#26 | \[TASK\] Criação da tela/modal de detalhes do ponto de coleta | Alta | **Iniciado / Pendente** |
-| \#28 | \[TASK\] Implementação da lógica de listagem e moderação de Feedbacks | Baixa | **Iniciado / Pendente** |
+| \#28 | \[TASK\] Implementação da lógica de listagem e moderação de Relatos de Problemas | Baixa | **Iniciado / Pendente** |
 | \#32 | \[TASK\] Implementação de validações básicas (anti-spam / campos obrigatórios) | Média | **Iniciado / Pendente** |
 | \[DOC\] | Fechamento e Evidências da Sprint 6 (sprint-06.md) | Alta | **Concluído (Este arquivo)** |
+| \#68 | \[TASK\] Implementação de trigger/serviço para geração automática de Notificação ao salvar um Relato de Problema. | Baixa | **Concluído** |
 
 ## **4\. Relação com o Conteúdo da Disciplina**
 
