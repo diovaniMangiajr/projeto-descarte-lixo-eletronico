@@ -14,7 +14,7 @@
 - **Scrum Master:** Diovani da Cruz Mangia Maciel Junior
 
 ## 2. Objetivo da Sprint
-O objetivo principal desta sprint foi identificar e aplicar de forma justificada os **Padrões de Projeto (Design Patterns)** nas camadas de Frontend, Backend e Persistência da aplicação, visando mitigar problemas recorrentes de design e garantir alta coesão e baixo acoplamento. Adicionalmente, o foco esteve em sanar os débitos da sprint anterior e avançar significativamente nas funcionalidades de gerenciamento do sistema (CRUD de Pontos e Categorias) e na interface pública de visualização.
+O objetivo principal desta sprint foi identificar e aplicar de forma justificada os **Padrões de Projeto (Design Patterns)** nas camadas de Frontend, Backend e Persistência da aplicação, visando mitigar problemas recorrentes de design e garantir alta coesão e baixo acoplamento. Adicionalmente, o foco esteve em sanar os débitos da sprint anterior e avançar significativamente nas funcionalidades de gerenciamento do sistema (CRUD de Pontos de Coleta e Tipos de Produtos) e na interface pública de visualização.
 
 ## 3. Itens do Sprint Backlog
 
@@ -23,12 +23,12 @@ O objetivo principal desta sprint foi identificar e aplicar de forma justificada
 | #51 | [DOC] Identificação e Justificativa de Padrões de Projeto | Alta | Concluído |
 | #10 | [BACK] Criação da estrutura da tabela de Pontos de Coleta no banco de dados | Alta | Concluído |
 | #11 | [BACK] Implementação dos endpoints da API REST (GET, POST, PUT, DELETE) para a entidade Ponto | Alta | Concluído |
-| #12 | [TASK] Desenvolvimento da interface administrativa (Dashboard) para listagem e formulários de cadastro/edição | Alta | Concluído |
+| #12 | [BACK] Desenvolvimento das lógicas de controle e validação de persistência do painel administrativo | Alta | Concluído |
 | #13 | [FRONT] Desenvolvimento da interface administrativa (Dashboard) para listagem e formulários de cadastro/edição | Alta | Concluído |
 | #22 | [TASK] Criação da interface de listagem com cards responsivos | Média | Concluído |
-| #27 | [TASK] CRUD de Categorias (Entidade, Controller e Interface Admin) | Média | Concluído |
-| #29 | [TASK] Ajuste no formulário de pontos para vincular as categorias existentes (Relacionamento N:N) | Média | Concluído |
-| #31 | [TASK] Criação do endpoint público de POST para recebimento de feedbacks | Baixa | Concluído |
+| #27 | [TASK] CRUD de Tipos de Produtos (Entidade, Controller e Interface Admin) | Média | Concluído |
+| #29 | [TASK] Ajuste no formulário de pontos para vincular os tipos de produtos existentes (Relacionamento N:N) | Média | Concluído |
+| #31 | [TASK] Criação do endpoint público de POST para recebimento de relato de problemas | Baixa | Concluído |
 
 ## 4. Relação com o Conteúdo da Disciplina
 A Sprint 5 materializa de forma prática o módulo de **Padrões de Projeto**. A equipe demonstram maturidade ao implementar e documentar padrões clássicos do GoF (Criação, Estruturação e Comportamentais) e padrões corporativos (PoEAA). Foram explorados conceitos como *Inversão de Controle (IoC)*, *Injeção de Dependência (DI)*, *Singleton*, *Proxy*, *DTO*, *Chain of Responsibility*, *Repository*, *Data Mapper* e *Unit of Work*, blindando as camadas da aplicação contra vazamento de escopo e interdependência excessiva.
@@ -59,7 +59,7 @@ A Sprint 5 materializa de forma prática o módulo de **Padrões de Projeto**. A
 **Registro de Reunião:** ![Print da reunião](prints_reunioes/sprint-05-reuniao.jpeg)
 
 ## 7. Evolução da Aplicação Web
-O incremento gerado nesta sprint trouxe robustez técnica e funcional ao projeto. No **Backend**, a persistência de dados foi consolidada no PostgreSQL com a criação das tabelas de ecopontos e categorias, gerenciadas por migrações estruturadas. Os endpoints RESTful do CRUD de pontos de coleta e categorias foram totalmente finalizados e integrados aos padrões de DTO e Service. No **Frontend**, a interface do painel administrativo (Dashboard) avançou com formulários dinâmicos de cadastro e edição capazes de associar categorias em relacionamentos N:N. Para o cidadão comum, a interface de visualização ganhou cards responsivos de fácil leitura e a API passou a receber feedbacks públicos sem exigência de autenticação prévia.
+O incremento gerado nesta sprint trouxe robustez técnica e funcional ao projeto. No **Backend**, a persistência de dados foi consolidada no PostgreSQL com a criação das tabelas de pontos de coleta e tipos de produtos, gerenciadas por migrações estruturadas. Os endpoints RESTful do CRUD de pontos de coleta e tipos de produtos foram totalmente finalizados e integrados aos padrões de DTO e Service. No **Frontend**, a interface do painel administrativo (Dashboard) avançou com formulários dinâmicos de cadastro e edição capazes de associar tipos de produtos em relacionamentos N:N.
 
 ## 8. Dificuldades Encontradas
 | Dificuldade | Impacto | Ação tomada |

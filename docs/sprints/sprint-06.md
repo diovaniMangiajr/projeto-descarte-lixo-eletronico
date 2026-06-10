@@ -20,7 +20,7 @@ O objetivo central desta sprint foi estabelecer o alicerce de alto nível e a fo
 | \#8 | \[BACK\] Configuração da lógica de segurança, JWT e filtros de autenticação | Alta | **Concluído** |
 | \[DOC\] | Definição da Arquitetura de Software (arquitetura.md) | Alta | **Concluído** |
 | \[DOC\] | Revisão Geral e Auditoria da Documentação do Projeto (Scrum Master) | Média | **Iniciado / Pendente** |
-| \#21 | \[TASK\] Configuração do mapa base e renderização de markers dinâmicos | Média | **Concluído** |
+| \#21 | \[TASK\] Configuração do mapa base e renderização de markers dinâmicos | Média | **Iniciado / Pendente** |
 | \#23 | \[TASK\] Integração com o endpoint de listagem pública de pontos | Alta | **Iniciado / Pendente** |
 | \#26 | \[TASK\] Criação da tela/modal de detalhes do ponto de coleta | Alta | **Iniciado / Pendente** |
 | \#28 | \[TASK\] Implementação da lógica de listagem e moderação de Relatos de Problemas | Baixa | **Iniciado / Pendente** |

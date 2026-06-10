@@ -1,0 +1,39 @@
+@startuml
+autonumber
+
+actor Administrador
+participant "Frontend\n(React)" as Front
+participant "Backend\n(Spring Boot)" as Back
+participant "API de Mapas\n(Externa)" as Map
+database "Banco de Dados\n(PostgreSQL)" as DB
+
+== Interação Inicial ==
+Administrador -> Front : Preenche formulário do ponto\nde coleta e clica em "Salvar"
+
+== Processamento no Frontend ==
+Front -> Front : Valida campos obrigatórios\n(nome, endereço, categorias)
+
+== Comunicação Client-Server ==
+Front -> Back : POST /api/pontos (JSON com os\ndados)
+
+== Processamento no Backend ==
+Back -> Back : Valida integridade e regras de\nnegócio
+
+== Integração com Serviço Externo ==
+Back -> Map : Requisição HTTP Geocoding (Endereço)
+activate Map
+Map --> Back : Retorno das Coordenadas (Latitude / Longitude)
+deactivate Map
+
+== Persistência no Banco de Dados ==
+Back -> DB : INSERT INTO ponto_coleta\n(...)
+activate DB
+DB --> Back : Confirma persistência e\nretorna ID gerado
+deactivate DB
+
+== Resposta do Servidor ==
+Back --> Front : HTTP 201 Created (Objeto do\nponto salvo)
+
+== Feedback para o Usuário ==
+Front --> Administrador : Renderiza toast/mensagem de\nsucesso na interface
+@enduml

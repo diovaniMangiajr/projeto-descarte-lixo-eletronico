@@ -14,8 +14,8 @@ O objetivo central desta sprint foi o levantamento, descrição, organização e
 
 ## 3. Itens do Sprint Backlog
 * Identificação de usuários e partes interessadas (Cidadãos e Administradores).
-* Levantamento de 8 Requisitos Funcionais (RF01 a RF08).
-* Criação de 6 User Stories (US01 a US06) contemplando autenticação, gestão de pontos e feedbacks.
+* Levantamento de 10 Requisitos Funcionais (RF01 a RF10).
+* Criação de 6 User Stories (US01 a US06) contemplando autenticação, gestão de pontos, feedbacks e notificações de campo.
 * Elaboração da Matriz de Rastreabilidade (Requisitos vs. User Stories).
 * Refinamento de tarefas (estimativa de aproximadamente 30 tasks).
 * Definição inicial da interface (modais de pontos e página de cadastro).

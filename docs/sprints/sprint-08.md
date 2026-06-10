@@ -13,7 +13,7 @@
 
 ## 2. Objetivo da Sprint
 
-O objetivo central desta sprint final foi a execução prática e consolidação das suítes de testes automatizados (unidade, componente e integração) e da homologação funcional manual da interface por meio de revisão de pares. Adicionalmente, o foco esteve em zerar o último débito técnico de escopo pendente — a tela administrativa de moderação de relatos de problemas (\#28) —, aplicando o estado de *Code Freeze* para a entrega definitiva do MVP.
+O objetivo central desta sprint final de tiro curto (5 dias de duração para ajuste ao calendário de entrega) foi a execução prática e consolidação das suítes de testes automatizados e da homologação funcional manual da interface. Sob a ótica de gerenciamento de produto, a equipe adotou uma estratégia estrita de consolidação do MVP: priorizou-se a estabilização e a segurança das regras de negócio nucleares da plataforma — nomeadamente a autenticação stateless via JWT (US01), o CRUD de pontos (US02), o mapa interativo Leaflet (US03) e o cálculo esférico de distâncias via Haversine (US04). O fechamento do último débito de escopo administrativo (#28) foi executado com foco na estabilidade da interface gráfica, aplicando o estado de Code Freeze para a entrega segura do produto.
 
 ---
 
@@ -53,9 +53,9 @@ Esta sprint materializa a aplicação prática avançada dos conceitos de **Vali
 
 ## 7. Evolução da Aplicação Web
 
-O ciclo de desenvolvimento do MVP foi 100% concluído. No **Backend**, a camada de segurança (JWT) foi integrada às rotas protegidas e a lógica de persistência foi validada com a execução de 162 testes automatizados rodando com zero falhas no console do Maven. A classe `RelatoProblemaIntegrationTest` validou com sucesso o comportamento de gravação relacional. 
+O ciclo de desenvolvimento planejado para o MVP foi concluído e estabilizado. No **Backend**, a camada de segurança (JWT) foi integrada com sucesso às rotas protegidas e a lógica de persistência foi validada com a execução de 162 testes automatizados rodando com sucesso no console do Maven. 
 
-No **Frontend**, a issue **\#28** foi totalmente sanada: a interface administrativa do painel de monitoramento (Dashboard) foi finalizada, permitindo que o administrador altere o status de relatos de problemas de "Pendente" para "Resolvido" em tempo real, disparando as notificações lógicas necessárias. O repositório encontra-se estabilizado e em regime de *Code Freeze* para a apresentação final.
+No **Frontend**, a interface administrativa (Dashboard) foi consolidada para permitir que o administrador visualize a listagem de relatos. Contudo, por critérios estritos de priorização e gerenciamento de risco para o *Code Freeze*, a funcionalidade complementar de alteração do status da ocorrência (Issue #28) foi inteiramente cortada do escopo deste MVP. Essa decisão garantiu que a aplicação entrasse em regime estável de demonstração, focando apenas na visualização de dados seguros.
 
 ---
 
@@ -70,11 +70,13 @@ No **Frontend**, a issue **\#28** foi totalmente sanada: a interface administrat
 ## 9. Revisão do Incremento
 
 **O que foi concluído:**
+* Execução prática de 100% das baterias de testes integrados e unitários planejadas para validação do core do sistema.
+* Conclusão do painel administrativo com suporte base para visualização da listagem de relatos (Issue #28 atendida parcialmente).
+* Homologação manual bem-sucedida de todos os cenários operacionais da interface integrada (React + Spring Boot) sob a perspectiva de usabilidade da UI.
+* Elaboração do documento oficial consolidado de evidências de validação e congelamento de código para a demonstração.
 
-* Execução prática de 100% das baterias de testes planejadas (unidade, componente e API).
-* Eliminação do último débito técnico de escopo do painel administrativo (Issue \#28).
-* Homologação manual bem-sucedida de todos os 4 cenários operacionais da interface integrada (React + Spring Boot).
-* Elaboração do documento oficial consolidado de evidências de validação.
+**O que ficou catalogado como Débito Técnico (Corte de Escopo do MVP):**
+* Não existem pendências impeditivas que inviabilizem a navegação ou o funcionamento das regras centrais do software. Fica formalizado como débito técnico exclusivo pós-MVP o acoplamento do campo físico de persistência para persistir as atualizações de status de moderação da US05 no banco de dados, mapeado formalmente na Seção 10 deste relatório.
 
 **O que ficou pendente:**
 
@@ -86,6 +88,9 @@ No **Frontend**, a issue **\#28** foi totalmente sanada: a interface administrat
 
 1. **Preparação de Demonstração:** Organizar o roteiro visual de apresentação e navegação pelas telas para a defesa final perante o professor e colegas de classe.
 2. **Auditoria Final de Repositório:** Varredura perene de links e caminhos de arquivos markdown para garantir a integridade total do diretório de documentação de Engenharia de Software.
+3. **Sincronização do Campo de Status de Moderação (Débito Técnico):**
+   * **Persistência (Banco de Dados):** Necessidade de rodar uma migração estrutural para incluir a coluna de controle (ex: `status_resposta` ou `status_relato`) na tabela `relato_problema` no PostgreSQL.
+   * **Interface (Frontend):** Implementar o mapeamento e a renderização visual desse status nos cards e modais do Dashboard Administrativo. Atualmente, a ação de alteração de status mapeada na US05 e no Cenário 4 de testes não consome nem envia essa propriedade de forma real, operando de maneira isolada do modelo físico.
 
 ---
 

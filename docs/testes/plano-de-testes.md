@@ -28,17 +28,17 @@ Os testes unitários focam de forma isolada nas lógicas de processamento intern
 
 Validam se o comportamento do servidor de API responde corretamente sob o protocolo de comunicação de rede.
 
-* **Ferramentas:** MockMvc integrado ao Spring Test.  
-* **Escopo Técnico:** Interceptação da camada @RestController, cobrindo classes de controle como ExemploControllerTest e NotificacaoControllerTest.  
-* **Abordagem:** Garantir o correto disparo dos códigos de status HTTP (200, 201, 400\) e a captura centralizada de erros pelo manipulador global de exceções.
+* **Ferramentas:** MockMvc integrado ao Spring Test.
+* **Escopo Técnico:** Interceptação da camada @RestController, cobrindo classes de controle como PontoColetaControllerTest e NotificacaoControllerTest.
+* **Abordagem:** Garantir o correto disparo dos códigos de status HTTP (200, 201, 400) e a captura centralizada de erros pelo manipulador global de exceções.
 
 ### **2.3. Testes de Integração de API (Conteinerizados)**
 
 Verificam o acoplamento do código-fonte com os mecanismos reais de persistência e segurança.
 
-* **Ferramentas:** RestAssured, Spring Boot DataJpaTest, scripts de migração Flyway e Testcontainers.  
-* **Escopo Técnico:** Fluxos complexos de escrita e barreiras de segurança, com foco nas classes AuthIntegrationTest e RelatoProblemaIntegrationTest.  
-* **Abordagem:** O Testcontainers levanta uma instância isolada e real do PostgreSQL em um container Docker. A biblioteca RestAssured simula requisições caixa-preta de ponta a ponta, avaliando as travas de token JWT e a gravação relacional de tabelas como ponto\_coleta e relato\_problema.
+* **Ferramentas:** RestAssured, Spring Boot DataJpaTest, scripts de migração Flyway e Testcontainers.
+* **Escopo Técnico:** Fluxos complexos de escrita e barreiras de segurança, com foco nas classes AuthIntegrationTest e PontoColetaIntegrationTest.
+* **Abordagem:** O Testcontainers levanta uma instância isolada e real do PostgreSQL em um container Docker. A biblioteca RestAssured simula requisições caixa-preta de ponta a ponta, avaliando as travas de token JWT e a gravação relacional de tabelas como ponto_coleta e relato_problema.
 
 ## **3\. Estratégia de Testes de Sistema e Interface**
 
@@ -59,9 +59,14 @@ O time executará de forma integrada os seguintes fluxos operacionais para preen
 | Cenário ID | Fluxo de Ação Técnico Executado | Resultado Esperado (Critério de Aceite) | Avaliador Par |
 | :---- | :---- | :---- | :---- |
 | **Cenário 1** | Acessar a tela inicial pública e interagir com o mapa Leaflet e a listagem responsiva para localizar pontos de coleta em Lavras/MG. | Os marcadores geográficos devem aparecer plotados nas posições exatas obtidas a partir dos dados retornados da API pública (GET). | (Augusto / Ezequiel) |
-| **Cenário 2** | Selecionar um ponto de coleta específico no mapa, abrir o modal de detalhes e submeter um aviso de "Coletor Lotado" fornecendo nome e e-mail. | O sistema deve validar a identificação obrigatória do cidadão, aceitar o payload e emitir um alerta visual de sucesso na UI. | (Rafael / Leonardo) |
+| **Cenário 2** | Selecionar um ponto de coleta específico no mapa, abrir o modal de detalhes e submeter um aviso de lixeira cheia (enviando a constante `LIXEIRA_CHEIA` via payload JSON) fornecendo nome e e-mail. | O sistema deve validar a identificação obrigatória do cidadão, aceitar o payload e emitir um alerta visual de sucesso na UI. | (Rafael / Leonardo) |
 | **Cenário 3** | Acessar a rota /admin, efetuar login com credenciais válidas e submeter o formulário de um novo ponto de coleta associado a múltiplos tipos de produtos. | O sistema deve armazenar o token JWT localmente, validar as permissões de acesso, gravar o ponto no PostgreSQL e renderizá-lo de imediato no dashboard. | Equipe Frontend (Augusto / Rafael) |
-| **Cenário 4** | Navegar pelo painel de monitoramento do painel administrativo e alterar o status do relato recebido no Cenário 2 de "Pendente" para "Resolvido". | A API deve processar a atualização de status do relato de problema, disparar a respectiva notificação e remover o alerta do painel principal. | Scrum Master (Diovani) |
+| **Cenário 4** | Navegar pelo painel de monitoramento do painel administrativo e alterar o status do relato recebido no Cenário 2 de "Pendente" para "Resolvido". | A interface gráfica deve simular localmente a alteração de status do relato no estado do componente de tela e atualizar visualmente o dashboard. (Nota de Escopo: A persistência física deste status no PostgreSQL foi postergada para o pós-MVP, operando de forma simulada no frontend).| Scrum Master (Diovani) |
+| **Cenário 5** | Bloquear a conexão de rede com o provedor externo do mapa Leaflet e carregar a página inicial pública do sistema. | A interface React deve interceptar a falha de carregamento da API de terceiros, manter-se estável e exibir uma mensagem amigável de erro ao cidadão (conforme RNF08). | Equipe Frontend (Leonardo/Ezequiel) |
+| **Cenário 6** | Acessar a plataforma e verificar a solicitação de uso de dados de geolocalização do navegador. | O sistema deve disparar o prompt de consentimento explícito e tratar adequadamente o cenário caso o usuário recuse (conforme RNF07). | (Leonardo / Ezequiel) |
+| **Cenário 7** | Acessar o painel de administração e executar o fluxo de criação, edição e exclusão de um Tipo de Produto isolado. | A API deve processar as alterações na tabela `tipo_produto` independentemente do formulário de pontos de coleta (conforme RF05). | (Augusto / Rafael) |
+| **Cenário 8** | Acessar a aplicação pública através dos navegadores Google Chrome, Mozilla Firefox e Microsoft Edge. | A renderização do mapa, dos componentes interativos e dos cards deve ocorrer sem quebras de layout (conforme RNF03). | (Leonardo / Ezequiel) |
+| **Cenário 9** | Inspecionar a aba Network do navegador (DevTools) durante o carregamento inicial da página pública. | O download dos dados de pontos de coleta deve ocorrer de forma assíncrona, sem bloquear a renderização inicial da interface de usuário (conforme RNF05). | (Augusto / Rafael) |
 
 ## **5\. Matriz de Rastreabilidade Estratégica (Requisitos vs. Suítes)**
 
@@ -69,12 +74,12 @@ Esta matriz demonstra o mapeamento completo e a amarração de cobertura de qual
 
 | História de Usuário (ID) | Teste Unitário (JUnit) | Teste de API / Integração | Teste de Sistema (Interface e API Cat) |
 | :---- | :---- | :---- | :---- |
-| **US01:** Autenticação e Segurança de Admin | Verificar hashing BCrypt de armazenamento de credenciais. | Testar filtros de segurança e validação sintática do token JWT. | Fluxo de login obrigatório para acesso aos Cenários operacionais 3 e 4\. |
-| **US02:** Gestão de Pontos de Coleta | Validar a lógica de persistência e validações isolando repositórios com mocks. | Testar o ciclo completo do CRUD na base PostgreSQL real via Testcontainers. | **Cenário 3:** Inserção e gravação em tempo real de um novo ponto no dashboard. |
+| **US01:** Autenticação e Segurança de Admin | Verificar hashing BCrypt de armazenamento de credenciais. | Testar filtros de segurança e validação sintática do token JWT. | Fluxo de login obrigatório para acesso aos Cenários operacionais 3 e 4, e validação de Logout (encerramento de sessão e bloqueio subsequente de rotas). |
+| **US02:** Gestão de Pontos de Coleta | Validar a lógica de persistência e validações isolando repositórios com mocks. | Testar o ciclo completo do CRUD na base PostgreSQL real via Testcontainers, incluindo testes de contorno defensivos contra inserção de coordenadas geográficas inválidas (conforme RNF02). | **Cenário 3:** Inserção e gravação em tempo real de um novo ponto no dashboard. |
 | **US03:** Visualização de Pontos | Validar o mapeamento estrutural de entidades de domínio para DTOs públicos. | Verificar o tempo de resposta e payload leve na rota pública GET /api/pontos. | **Cenário 1:** Renderização espacial e leitura dos cartões responsivos na tela inicial. |
 | **US04:** Detalhes e Geolocalização | Testar algoritmo matemático da Fórmula de Haversine para cálculo de distâncias. | Validar formatação e injeção correta de dados geográficos estruturados no JSON público. | **Cenário 1:** Abertura do modal expansível contendo dados de funcionamento e restrições. |
-| **US05:** Gestão de Tipos de Produtos e Relatos de Problemas | Validar fluxo de alteração de status e acionamento lógico da notificação na camada Service. | Testar chamadas restritas com JWT no endpoint /api/relatos-problemas/{id} e trigger de notificações. | **Cenário 4:** Triagem, leitura de notificações administrativas e moderação de alertas no Dashboard. |
-| **US06:** Registro de Relato de Problema de Campo | Validar travas sintáticas e obrigatoriedade de campos (nome/email preenchidos) no DTO. | Executar disparos lógicos no endpoint público de submissão de relatos de problemas. | **Cenário 2:** Preenchimento identificado e envio do formulário de ocorrência na visão do cidadão. |
+| **US05:** Gestão de Tipos de Produtos e Relatos de Problemas | Validar fluxo de alteração de status e acionamento lógico da notificação na camada Service. | Testar chamadas restritas com JWT no endpoint `/api/relatos-problemas/{id}` e trigger de notificações em `RelatoProblemaIntegrationTest`. | **Cenário 4 e Cenário 7:** Triagem, moderação de alertas no Dashboard e gerenciamento de tipos de produtos. |
+| **US06:** Registro de Relato de Problema de Campo | Validar travas sintáticas e obrigatoriedade de campos (nome/email preenchidos) no DTO. | Executar disparos lógicos no endpoint público de submissão de relatos de problemas em `RelatoProblemaIntegrationTest`. | **Cenário 2:** Preenchimento identificado e envio do formulário de ocorrência na visão do cidadão. |
 
 ## **6\. Gestão de Defeitos e Critérios de Aceite**
 

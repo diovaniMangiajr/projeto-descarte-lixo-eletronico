@@ -1,0 +1,69 @@
+@startuml
+left to right direction
+
+node "Camada de Apresentação (Cliente)" {
+  component Front [
+    **Frontend Web (React / Vite)**
+    ---
+    Interface de Usuário (SPA)
+    Responsável por renderizar os
+    mapas, cards e formulários.
+    
+    Usa **Axios** para gerenciar e 
+    realizar as requisições HTTP.
+  ]
+}
+
+node "Camada de Serviços (Servidor API Monolítico)" {
+component ServRelatos [
+    **Módulo de Relatos de Problemas**
+    ---
+    Componente lógico interno que recebe
+    problemas relacionados pelos
+    cidadãos e gerencia tipos de produtos.
+  ]
+  component ServAuth [
+    **Módulo de Autenticação**
+    ---
+    Componente lógico interno que valida
+    credenciais do Administrador e
+    protege rotas restritas.
+  ]
+  component ServPontos [
+    **Módulo de Pontos e Mapas**
+    ---
+    Componente lógico interno que processa
+    o CRUD de pontos e integra com
+    API externa para geocodificação.
+  ]
+}
+
+database "Camada de Persistência" {
+  component DB [
+    **Banco de Dados (PostgreSQL)**
+    ---
+    Armazena usuários,
+    coordenadas, pontos, notificações
+    e relatos de problemas.
+  ]
+}
+
+cloud "Serviços Externos" {
+  component APIMapas [
+    **API de Mapas Externa**
+    ---
+    Fornece conversão de
+    endereços em lat/long.
+  ]
+}
+
+Front --> ServRelatos : Chamadas REST (Axios)
+Front --> ServAuth : Chamadas REST (Axios)
+Front --> ServPontos : Chamadas REST (Axios)
+
+ServRelatos --> DB : TCP/IP (JDBC/JPA)
+ServAuth --> DB : TCP/IP (JDBC/JPA)
+ServPontos --> DB : TCP/IP (JDBC/JPA)
+
+ServPontos --> APIMapas : HTTP (Geocoding)
+@enduml

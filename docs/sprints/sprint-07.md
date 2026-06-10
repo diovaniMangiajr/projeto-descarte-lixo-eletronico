@@ -29,6 +29,9 @@ O objetivo principal desta etapa foi o planejamento estratégico e a modelagem d
 | \[DOC\] | Revisão Geral e Auditoria da Documentação do Projeto | Média | **Constante / Em Andamento** |
 | \#28 | \[TASK\] Implementação da lógica de listagem e moderação de Relatos de Problemas (Update status) | Média | **Pendente / Adiado** |
 | \[DOC\] | Fechamento e Evidências da Sprint 7 (sprint-07.md) | Alta | **Concluído (Este arquivo)** |
+| \#24 | [TASK] Implementação de captura de coordenadas via Geolocation API | Alta | **Concluído** |
+| \#25 | [TASK] Lógica para cálculo de distância (Haversine) e exibição nos componentes de UI | Média | **Concluído** |
+| \#30 |[FRONT] Criação do formulário de relato de problema (Frontend) | Média |	**Concluído** |
 
 ---
 
@@ -49,13 +52,13 @@ Esta sprint conecta-se de forma direta ao módulo de **Testes e Garantia de Qual
 
 * **Arquivos modificados:** docs/sprints/sprint-07.md, docs/testes/plano-de-testes.md, códigos de componentes e integração do mapa React.
 * **Tag da sprint:** sprint-07
-* **Reunião:** Esse documento é apenas para entrega no campus virtual. A equipe decidiu realizar uma única sprint de testes (7 e 8) em uma só.
+* **Reunião:** Alinhamento síncrono via plataforma de comunicação. A equipe estabeleceu um macroplanejamento integrado para o bloco final de qualidade (Sprints 7 e 8), dividindo o esforço em duas etapas estruturadas: a Sprint 7 focou estritamente no desenho da arquitetura de testes e encerramento de interfaces, enquanto a Sprint 8 foi reservada para a execução das baterias automatizadas e aplicação do Code Freeze.
 
 ---
 
 ## 7. Evolução da Aplicação Web
 
-Houve uma evolução substancial no **Frontend** da visão pública do cidadão. O mapa interativo baseado em Leaflet foi configurado, centralizado em Lavras/MG e devidamente integrado via Axios para renderizar marcadores dinâmicos a partir de dados reais do PostgreSQL. O modal expansível de detalhamento foi finalizado, permitindo visualizar endereço e tipos de produtos de cada ecoponto e realizar o envio do formulário com validações embutidas e travas sintáticas contra dados nulos e spams. Adicionados validadores de campos obrigatórios no DTO de relatos de problemas públicos do cidadão.
+Houve uma evolução substancial no **Frontend** da visão pública do cidadão. O mapa interativo baseado em Leaflet foi configurado, centralizado em Lavras/MG e devidamente integrado via Axios para renderizar marcadores dinâmicos a partir de dados reais do PostgreSQL. O modal expansível de detalhamento foi finalizado (Issue #26), permitindo visualizar endereço e tipos de produtos de cada ponto de coleta e realizar o envio do formulário de relato de campo (Issue #30), contando com validações embutidas e travas sintáticas contra dados nulos e spams. Adicionados validadores de campos obrigatórios no DTO de relatos de problemas públicos do cidadão.
 
 ---
 
@@ -74,6 +77,7 @@ Houve uma evolução substancial no **Frontend** da visão pública do cidadão.
 * Plano de testes estratégicos estruturado e revisado com foco em homologação interna (V3).
 * Zera dos débitos técnicos de mapas, listagem pública de pontos e modal detalhado em React.
 * Adicionados validadores de campos obrigatórios no DTO de relatos de problemas públicos do cidadão.
+* Interface gráfica do formulário de relatos pública do cidadão (#30) completamente integrada ao modal de pontos de coleta.
 
 **O que ficou pendente (Débito Técnico para a Sprint 8):**
 

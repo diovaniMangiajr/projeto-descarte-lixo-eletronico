@@ -7,7 +7,7 @@
 O sistema adota o modelo arquitetural padrão **Cliente-Servidor (Client-Server)** estruturado através de uma comunicação puramente **RESTful**. A premissa central é o desacoplamento total entre a aplicação de interface com o usuário (Frontend) e o motor de regras de negócio e persistência (Backend). Toda a troca de dados entre os dois ecossistemas é realizada de maneira assíncrona por meio do protocolo HTTPS, utilizando o formato JSON (JavaScript Object Notation) como payload padrão para requisições e respostas.  
 Dessa forma, o servidor opera em modo *stateless*, não mantendo estado de sessão em memória, o que otimiza a performance e abre margem para escalabilidade horizontal, enquanto o cliente gerencia o estado da interface dinamicamente.
 
-![Arquitetura](../modelagem/diagrama-de-componentes.png)
+![Arquitetura](../modelagem/Diagramas/diagrama-de-componentes.png)
 
 ## **2\. Definição de Camadas e Componentes**
 
@@ -31,6 +31,9 @@ O backend encapsula as regras de negócio, restrições e segurança em uma estr
 
 O armazenamento persistente é delegado ao PostgreSQL, rodando isoladamente em um container Docker para garantir a homogeneidade do ambiente de desenvolvimento. O ciclo de evolução estrutural das tabelas é estritamente controlado pelo Flyway, assegurando migrações incrementais rastreáveis.
 
+### **2.4. Serviços Externos (APIs de Terceiros)**
+* **API de Geocodificação (Geocoding):** Serviço externo consumido pelo backend durante o cadastro de novos pontos de coleta. Responsável por traduzir o endereço físico preenchido pelo administrador em coordenadas matemáticas (Latitude e Longitude) de forma transparente, permitindo a plotagem precisa no mapa sem intervenção manual.
+
 ## **3\. Justificativa Técnica das Escolhas Arquiteturais**
 
 As decisões tomadas pelo grupo visam sanar os problemas comuns de acoplamento e lentidão no desenvolvimento distribuído:
@@ -41,13 +44,14 @@ As decisões tomadas pelo grupo visam sanar os problemas comuns de acoplamento e
 | **Spring Boot Ecosystem** | Fornece inversão de controle (IoC) robusta nativa, facilitando a injeção de dependências e acelerando a configuração de segurança complexa através do Spring Security. |
 | **React \+ Vite** | O Vite substitui empacotadores legados (como Webpack), garantindo tempos de compilação locais instantâneos via ES Modules nativos, otimizando o fluxo de desenvolvimento do grupo. |
 | **Flyway Migrations** | Evita problemas de dessincronização de esquemas de banco de dados entre os membros da equipe. Cada alteração estrutural vira um script versionado no repositório. |
+| **API Externa de Geocodificação** | Automação e Prevenção de Erros. Isola a complexidade matemática da aplicação, garantindo que o banco de dados armazene coordenadas precisas e validadas sem depender de digitação manual (e sujeita a erros) por parte do administrador. |
 
 ## **4\. Relação com Requisitos e Atributos de Qualidade**
 
 ### **4.1. Atendimento aos Requisitos Funcionais**
 
 * **Autenticação do Administrador (US01):** O Spring Security atua como um interceptor interceptando requisições na camada de controle através de filtros. Senhas passam por hashing seguro na camada de negócio antes de atingir a persistência.  
-* **Gestão de Pontos de Coleta e Categorias (US02, US05):** O fluxo de criação flui de maneira limpa através de Controllers que validam os dados de entrada, Services que aplicam as restrições e Repositories que realizam a persistência segura no PostgreSQL.  
+* **Gestão de Pontos de Coleta e Tipos de Produtos (US02, US05):** O fluxo de criação flui de maneira limpa através de Controllers que validam os dados de entrada, Services que aplicam as restrições e Repositories que realizam a persistência segura no PostgreSQL. 
 * **Visualização de Mapas e Cards (US03):** A API REST expõe um endpoint público que retorna a coleção de ecopontos em JSON de forma performática, permitindo que a biblioteca Leaflet no Frontend processe e renderize dinamicamente os pins.
 
 ### **4.2. Atributos de Qualidade Atendidos**

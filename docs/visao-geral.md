@@ -27,12 +27,18 @@ Para mitigar os impactos ambientais e promover a conscientização, é fundament
 * Aplicar, na prática, os conceitos de Engenharia de Software, incluindo modelagem, arquitetura, padrões de projeto e testes.
 
 ## 5. Escopo Inicial da Aplicação Web (MVP)
-O escopo inicial (Mínimo Produto Viável) foca nas funcionalidades essenciais para viabilizar a plataforma:
+O escopo inicial (Mínimo Produto Viável) abrange o ecossistema completo de mapeamento interativo e moderação de ocorrências de campo:
+
 1. **Área Pública (Cidadão):**
-   * Interface web com listagem de pontos de coleta de lixo eletrônico.
+   * Interface web com mapa interativo (Leaflet) para visualização geográfica de pontos de coleta ativos.
+   * Alternância para visualização em formato de lista com cards responsivos.
+   * Captura de geolocalização do navegador para cálculo e exibição de distâncias esféricas (Fórmula de Haversine) até os pontos.
+   * Modal de detalhamento com horários de funcionamento e formulário identificado para envio de relatos de problemas de campo (ex: coletores lotados).
+
 2. **Área Administrativa (Gestão):**
-   * Sistema de autenticação (login/logout) seguro para administradores.
-   * Dashboard para gestão (Cadastro, Leitura, Atualização e Exclusão - CRUD) dos pontos de coleta (incluindo nome, endereço e tipos de resíduos aceitos).
+   * Sistema de autenticação seguro (Login/Logout) via tokens stateless (JWT) e hashing de senhas.
+   * Dashboard completo para gerenciamento (CRUD) de pontos de coleta e tipos de produtos aceitos (relacionamento N:N).
+   * Painel de monitoramento para triagem, leitura de notificações internas automáticas e moderação de relatos de problemas (atualização de status para "Resolvido").
 
 ## 6. Stack Tecnológico Selecionado
 Para garantir uma arquitetura robusta, moderna e adequada à proposta de aplicação web, o grupo definiu a seguinte stack:

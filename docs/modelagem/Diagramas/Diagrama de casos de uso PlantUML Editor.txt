@@ -1,0 +1,29 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+
+actor Administrador
+actor Cidadão
+
+rectangle "Sistema de Descarte de Lixo Eletrônico" {
+  usecase "Moderar Relatos de Problemas" as UC1
+  usecase "Gerenciar Tipos de Produtos" as UC2
+  usecase "Gerenciar Pontos de Coleta" as UC3
+  usecase "Realizar Login" as UC4
+
+  usecase "Enviar Feedback de Campo" as UC5
+  usecase "Ver Detalhes do Ponto" as UC6
+  usecase "Visualizar Localização e Distância" as UC7
+  usecase "Visualizar Pontos no Mapa/Lista" as UC8
+}
+
+Administrador --> UC1
+Administrador --> UC2
+Administrador --> UC3
+Administrador --> UC4
+
+Cidadão --> UC5
+Cidadão --> UC6
+Cidadão --> UC7
+Cidadão --> UC8
+@enduml

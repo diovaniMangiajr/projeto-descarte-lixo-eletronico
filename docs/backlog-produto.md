@@ -9,16 +9,17 @@ Este documento apresenta o Product Backlog do projeto de desenvolvimento de uma 
 * **Scrum Master**: Diovani da Cruz Mangia Maciel Junior.
 * **Stack Tecnológico**: React, Spring Boot e PostgreSQL.
 
+
 ## 3. Lista de User Stories (Priorizada)
 
 | ID | Requisito / Funcionalidade | Prioridade | Esforço (SP) | Status |
 | :--- | :--- | :--- | :--- | :--- |
-| US01 | Autenticação e Segurança do Administrador | Alta | 5 | Pendente |
-| US02 | Gestão de Pontos de Coleta (CRUD) | Alta | 8 | Pendente |
-| US03 | Visualização de Pontos (Mapa e Cards) | Alta | 8 | Pendente |
-| US04 | Detalhamento e Geolocalização do Usuário | Média | 5 | Pendente |
-| US05 | Gestão de Tipos de Produtos e Relatos de Problemas (Admin) | Média | 8 | Pendente |
-| US06 | Registro de Relato de Problema de Campo (Cidadão) | Baixa | 3 | Pendente |
+| US01 | Autenticação e Segurança do Administrador | Alta | 5 | **Concluído** |
+| US02 | Gestão de Pontos de Coleta (CRUD) | Alta | 8 | **Concluído** |
+| US03 | Visualização de Pontos (Mapa e Cards) | Alta | 8 | **Concluído** |
+| US04 | Detalhamento e Geolocalização do Usuário | Média | 5 | **Concluído** |
+| US05 | Gestão de Tipos de Produtos e Relatos de Problemas (Admin) | Média | 8 | **Parcialmente Concluído** |
+| US06 | Registro de Relato de Problema de Campo (Cidadão) | Média | 3 | **Concluído** |
 
 ---
 
@@ -48,17 +49,18 @@ Como Administrador do sistema de descarte de lixo eletrônico, eu quero realizar
 Como Administrador do sistema, eu quero cadastrar, listar, editar e remover pontos de coleta de lixo eletrônico para que a base de dados do mapa esteja sempre atualizada e com informações precisas para a população.
 
 **Critérios de Aceitação (Definition of Done):**
-* O sistema deve permitir o cadastro de um novo ponto com: nome, endereço completo, descrição, tipos de resíduos aceitos e coordenadas (lat/long).
+* O sistema deve permitir o cadastro de um novo ponto com: nome, endereço completo, descrição, tipos de resíduos aceitos, horário de abertura e horário de fechamento.
 * O sistema deve validar campos obrigatórios (ex: nome e endereço não podem ser vazios).
 * O administrador deve conseguir visualizar uma lista de todos os pontos cadastrados.
 * O sistema deve permitir a edição de qualquer informação de um ponto já existente.
 * O sistema deve permitir a exclusão de um ponto de coleta, solicitando confirmação antes da remoção definitiva.
-* As coordenadas (latitude e longitude) devem ser validadas para garantir que o pin seja plotado corretamente no mapa futuramente.
+* O sistema deve capturar automaticamente as coordenadas (latitude e longitude) a partir do endereço fornecido via integração com uma API externa de Geocodificação, garantindo que o pin seja plotado corretamente no mapa.
 
 **Tarefas Técnicas (Sub-tasks):**
 * [TASK] Criação da estrutura da tabela de Pontos de Coleta no banco de dados. #10
 * [TASK] Implementação dos endpoints da API REST (GET, POST, PUT, DELETE) para a entidade Ponto. #11
-* [TASK] Desenvolvimento da interface administrativa (Dashboard) para listagem e formulários de cadastro/edição. #13
+* [TASK] Desenvolvimento das lógicas de controle e validação de persistência do painel administrativo (Backend). #12
+* [TASK] Desenvolvimento da interface administrativa (Dashboard) para listagem e formulários de cadastro/edição (Frontend). #13
 
 ---
 
@@ -106,7 +108,7 @@ Como Administrador do sistema, eu quero gerenciar os tipos de produtos de lixo e
 * O administrador deve poder criar, editar e excluir os tipos de produto de lixo eletrônico (ex: Pilhas, Monitores).
 * O sistema deve permitir listar todos os relatos de problemas enviados pelos cidadãos, ordenados por data.
 * Cada relato de problema deve estar vinculado a um ponto de coleta específico.
-* O administrador deve poder marcar um relato de problema como "Resolvido".
+* ~~O administrador deve poder marcar um relato de problema como "Resolvido".~~ *(Nota: Funcionalidade inteiramente cortada do escopo do MVP atual, tanto na interface quanto no banco de dados, sendo mapeada como débito técnico pós-projeto).*
 * Os tipos de produtos de lixo eletrônico cadastrados devem estar disponíveis para seleção no momento da criação de um ponto de coleta.
 
 **Tarefas Técnicas (Sub-tasks):**
