@@ -1,139 +1,123 @@
-# projeto-descarte-lixo-eletronico
+# ♻️ Projeto Descarte Eletrônico Lavras
 
-Plataforma web para localizar e cadastrar pontos de coleta de lixo eletrônico em Lavras-MG.
+Plataforma web para localizar e cadastrar pontos de coleta de lixo eletrônico em Lavras-MG. Desenvolvido para a disciplina **GCC188 - Engenharia de Software (2026/1)**, com foco em organização de informações, evolução incremental e sustentabilidade.
 
-Este projeto é um trabalho da disciplina GCC188 - Engenharia de Software (2026/1), com foco em organização de informações, evolução incremental e apoio ao descarte correto.
+✅ **Status:** MVP (Produto Mínimo Viável) Concluído.
 
-## Visão Geral
+**Integrantes do Grupo:**
+- Augusto Fernandes Carvalho
+- Diovani da Cruz Mangia Maciel Júnior
+- Ezequiel Dominguez Santos
+- Rafael Silva Martins
 
-O objetivo é centralizar informações sobre pontos de coleta de lixo eletrônico para que o cidadão encontre locais confiáveis de descarte e para que administradores mantenham os dados atualizados.
+## 🎯 Visão Geral e Escopo
 
-## Status do Projeto
+O objetivo da plataforma é centralizar informações sobre ecopontos, permitindo que o cidadão encontre locais confiáveis de descarte (via mapa interativo e geolocalização) e que administradores façam a gestão desses dados (CRUD).
+👉 *Para um aprofundamento sobre a contextualização do problema e o roadmap, consulte nossa [Visão Geral do Projeto](./docs/visao-geral.md).*
 
-Em desenvolvimento inicial.
+## 💻 Stack Tecnológica
 
-## Público-Alvo
+* **Frontend:** React + TypeScript + Vite
+* **Backend:** Java 21 + Spring Boot 3 + Spring Security
+* **Banco de Dados:** PostgreSQL 16 + Flyway (Migrações)
+* **Infraestrutura:** Docker e Nginx
 
-- Cidadãos que precisam localizar pontos de descarte.
-- Administradores responsáveis por cadastrar e manter os pontos.
+👉 *Consulte nosso [Documento de Decisões de Projeto](./docs/projeto/decisoes-de-projeto.md) para ler a análise completa de alternativas e as justificativas baseadas nos princípios SOLID e padrões GoF adotados.*
 
-## Escopo do MVP
+## 🏗️ Estrutura do Repositório
 
-Funcionalidades priorizadas para a primeira versão:
+A arquitetura adota o padrão **Cliente-Servidor (Client-Server)** via comunicação **RESTful**, utilizando um repositório orquestrador com submódulos.
 
-- Listagem de pontos de coleta com filtros.
-- Login de administrador.
-- CRUD de pontos de coleta (criar, editar, excluir e listar).
+```text
+/
+├── docs/       # Documentação técnica profunda (Arquitetura, Sprints, Testes, etc.)
+├── frontend/   # Código fonte da SPA (React/Vite)
+├── backend/    # Submódulo Git apontando para a API (Spring Boot)
+└── docker-compose.yml # Orquestrador unificado dos serviços
+```
+👉 *Veja o [Documento de Arquitetura de Software](./docs/arquitetura/arquitetura.md) para visualizar os diagramas de componentes e o detalhamento das camadas.*
 
-## Roadmap
+---
 
-### Visualização e descoberta
+## 🚀 Como Executar o Projeto Completo (Ambiente Docker)
 
-- Mapa interativo para exibir pontos de coleta.
-- Filtro por categoria de material aceito.
-- Exibição de detalhes do ponto ao selecionar um marcador ou item da lista.
-- Geolocalização do usuário para identificar o ponto mais próximo.
+A orquestração da infraestrutura foi automatizada. Não é necessário instalar Java, Node.js ou PostgreSQL na máquina hospedeira.
 
-### Administração
+### Pré-requisitos
+* Sistema Operacional Linux (Recomendado).
+* **Docker** instalado e operacional.
 
-- Dashboard simples com indicadores básicos, como quantidade de pontos por região.
+### Passo a Passo
 
-### Funcionalidades futuras
-
-- Sugestão de novo ponto por usuários.
-- Roteirização para abrir o endereço em Google Maps ou Waze.
-- Notificações por e-mail via SMTP.
-- Página educativa sobre reciclagem e descarte correto.
-
-## Stack Tecnológica
-
-- Frontend: React + TypeScript
-- Integração HTTP: Axios
-- Backend: Java + Spring Boot
-- Banco de dados: PostgreSQL
-
-## Estrutura Prevista
-
-A intenção é manter frontend e backend no mesmo repositório, com a documentação organizada na pasta `docs/`.
-
-O frontend está isolado em `frontend/` para separar a aplicação da documentação e facilitar a evolução futura.
-
-## Como Executar Localmente
-
-### Frontend
-
-Entre na pasta do frontend antes de executar os comandos:
+**1. Clone o repositório principal e o submódulo**
+Para baixar o código do frontend e do backend simultaneamente, é **obrigatório** utilizar a flag `--recursive`:
 
 ```bash
-cd frontend
+git clone --recursive [https://github.com/diovaniMangiajr/projeto-descarte-lixo-eletronico.git](https://github.com/diovaniMangiajr/projeto-descarte-lixo-eletronico.git)
 ```
 
-1. Instale as dependências:
+**2. Acesse a raiz do projeto**
 
-	```bash
-	npm install
-	```
+```bash
+cd projeto-descarte-lixo-eletronico
+```
 
-2. Inicie o ambiente de desenvolvimento:
+**3. Suba a orquestração mestre**
+O comando abaixo fará o build do Java e do React, subirá o banco e executará as migrações (Flyway) em segundo plano:
 
-	```bash
-	npm run dev
-	```
+```bash
+docker compose up --build -d
+```
 
-3. Gere a build de produção:
+**4. Acesse a aplicação**
+Aguarde alguns segundos para a inicialização completa. Em seguida, abra no navegador:
 
-	```bash
-	npm run build
-	```
+👉 **http://localhost:5173**
 
-4. Pré-visualize a build gerada:
+---
 
-	```bash
-	npm run preview
-	```
+## 🔐 Acesso ao Painel Administrativo
 
-O frontend foi inicializado com Vite + React + TypeScript, React Router DOM e Axios.
+O banco de dados de testes já é inicializado automaticamente com 5 ecopontos em Lavras e uma conta de moderação ativa. Para testar o CRUD e as rotas protegidas, acesse `/login` utilizando:
 
-### Estrutura do Frontend
+* **E-mail:** `admin@descarte.local`
+* **Senha:** `Admin@123`
 
-- `frontend/src/app`: núcleo da aplicação e configuração de rotas.
-- `frontend/src/components/layout`: componentes compartilhados de layout.
-- `frontend/src/pages`: páginas organizadas por rota e contexto.
-- `frontend/src/services/http`: cliente HTTP e integrações com API.
-- `frontend/src/styles`: estilos globais da aplicação.
-- `frontend/src/theme`: lógica dos temas, dark e light.
+---
 
-As rotas iniciais disponíveis são:
+## 📚 Hub de Documentação
 
-- `/mapa`
-- `/admin`
-- `/login`
+Toda a documentação técnica e de engenharia do projeto está dividida e organizada em diretórios específicos dentro da pasta `docs/`. Acesse os links diretos abaixo:
 
-A rota raiz `/` redireciona para `/mapa`.
+* [Visão Geral do Projeto](./docs/visao-geral.md)
+* [Arquitetura de Software](./docs/arquitetura/arquitetura.md)
+* [Modelagem do Sistema (UML e DER)](./docs/modelagem/modelagem.md)
+* [Padrões de Projeto (Design Patterns)](./docs/padroes/padroes-de-projeto.md)
+* [Decisões de Projeto](./docs/projeto/decisoes-de-projeto.md)
+* [Revisões Incrementais (Sprints)](./docs/sprints/)
+* [Plano e Evidências de Testes](./docs/testes/)
 
-Quando a base do backend estiver consolidada, esta seção será atualizada com:
+---
 
-- pré-requisitos (versões de Node.js, Java e PostgreSQL)
-- comandos de instalação
-- comandos de execução do frontend e do backend
-- variáveis de ambiente necessárias
+## 🛠️ Desenvolvimento Isolado (Opcional)
 
-## Documentação
+Caso deseje trabalhar no desenvolvimento de apenas uma das partes do sistema, você pode executá-las de forma independente:
 
-O projeto possui documentação na pasta `docs/`:
+### Apenas o Backend (API e Banco de Dados)
+Útil para testar chamadas e endpoints via Postman/Insomnia. O comando utilizará o Compose isolado do submódulo:
+```bash
+cd backend
+docker compose up --build -d
+```
+A API ficará disponível em `http://localhost:8080`.
 
-- Visão geral
-- Backlog do produto
-- Arquitetura
-- Modelagem
-- Padrões de projeto
-- Decisões de projeto
-- Sprints
-- Plano e evidências de teste
-
-## Contribuição
-
-No momento, o desenvolvimento está restrito à equipe do projeto.
+### Apenas o Frontend (Sem Docker)
+Útil para desenvolvimento rápido de interface utilizando o servidor de desenvolvimento nativo do Node.js:
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
 ## Licença
 
