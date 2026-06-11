@@ -13,6 +13,7 @@ Plataforma web para localizar e cadastrar pontos de coleta de lixo eletrônico e
 ## 🎯 Visão Geral e Escopo
 
 O objetivo da plataforma é centralizar informações sobre ecopontos, permitindo que o cidadão encontre locais confiáveis de descarte (via mapa interativo e geolocalização) e que administradores façam a gestão desses dados (CRUD).
+
 👉 *Para um aprofundamento sobre a contextualização do problema e o roadmap, consulte nossa [Visão Geral do Projeto](./docs/visao-geral.md).*
 
 ## 💻 Stack Tecnológica
