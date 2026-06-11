@@ -54,7 +54,7 @@ A orquestração da infraestrutura foi automatizada. Não é necessário instala
 Para baixar o código do frontend e do backend simultaneamente, é **obrigatório** utilizar a flag `--recursive`:
 
 ```bash
-git clone --recursive [https://github.com/diovaniMangiajr/projeto-descarte-lixo-eletronico.git](https://github.com/diovaniMangiajr/projeto-descarte-lixo-eletronico.git)
+git clone --recursive https://github.com/diovaniMangiajr/projeto-descarte-lixo-eletronico.git
 ```
 
 **2. Acesse a raiz do projeto**
